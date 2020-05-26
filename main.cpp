@@ -1,63 +1,93 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-#include <time.h>
-#include <string.h>
+#include <vector>
+
 
 #define MAX 10000
 using namespace std;
- class Evento
-{
+class Evento{
 private:
     string tipoEvento;
     int tiempoEvento;
-
 public:
-    void setTipo(string evento){
-        this->tipoEvento=evento;
+
+    //constructor predeterminado
+    Evento(){
+        this->tiempoEvento = 0;
+        this->tipoEvento = "";
     };
 
+    // setters
+    void setTipo(string evento){
+        this->tipoEvento = evento;
+    };
+    void setTiempo(int tiempo){
+        this->tiempoEvento = tiempo;
+    };
 
-
+    // getters
+    string getTipo(){
+        return this->tipoEvento;
+    };
+    int getTiempoe(){
+        return this->tiempoEvento;
+    };
 };
 
- class Reloj
+class Reloj
 {
 private:
-        int numero;
-        string nombre;
-        string tipo;
-        int tiempo;
-        Evento evento;
+    int numero;
+    string nombre;
+    string tipo;
+    int tiempo;
+    Evento evento;
 
 
 public:
-        void setNumero(int Numero){numero=Numero;};
-        void setNombre(string Nombre){nombre=Nombre;};
-        void setTipo(string tipoo){tipo=tipoo;};
-        void setTiempo(int tiempoo){tiempo=tiempoo;};
-        void setEvento (Evento evento1){evento=evento1;};
+    Reloj(){
+        evento =  Evento();
+    };
 
-        int getNumero(){return numero;};
-        string getNombre(){return nombre;};
-        string getTipo(){return tipo;};
-        int getTiempo(){return tiempo;};
+    void setNumero(int Numero){numero=Numero;};
+    void setNombre(string Nombre){nombre=Nombre;};
+    void setTipo(string tipoo){tipo=tipoo;};
+    void setTiempo(int tiempoo){tiempo=tiempoo;};
 
-        //void segundosPeriodicos(){segundos=tiempo;};
-        //void segundosAleatorios(){segundos=rand()%tiempo;};
-        //void delay(int segundos)
-        //{
-          //  int milli_seconds = 1000 * segundos;
-            //clock_t start_time = clock();
+    void setEvento(int tiempo){
+        if(this->getTipo() == "periodico"){
+            evento.setTiempo(tiempo);
+            evento.setTipo("periodico");
+        }else if(this->getTipo() == "aleatorio"){
+            evento.setTiempo(rand() % tiempo);
+            evento.setTipo("aleatorio");
+        }
+    }
 
-            // looping till required time is not achieved
-            //while (clock() < start_time + milli_seconds)
-                ;
+    int getNumero(){return numero;};
+    string getNombre(){return nombre;};
+    string getTipo(){return tipo;};
+    int getTiempo(){return tiempo;};
+    Evento getEvento(){
+        return this->evento;
+    }
 
-        //}
-        //int getsegundos(){
-         //   return segundos;
-       // }
+    //void segundosPeriodicos(){segundos=tiempo;};
+    //void segundosAleatorios(){segundos=rand()%tiempo;};
+    //void delay(int segundos)
+    //{
+    //  int milli_seconds = 1000 * segundos;
+    //clock_t start_time = clock();
+
+    // looping till required time is not achieved
+    //while (clock() < start_time + milli_seconds)
+    ;
+
+    //}
+    //int getsegundos(){
+    //   return segundos;
+    // }
 
 };
 // clase Planificador
@@ -75,96 +105,44 @@ public:
 
 int main() {
 
-    char tiempo[20];
-    string linea;
-
-
+    string cadena;
     ifstream lectura("laconchadetumadre.txt");
-    if (lectura.is_open()) {
-        while (getline(lectura, linea)) // IMPRIME EL ARCHIVO LINEA POR LINEA
-        {
-            Reloj *reloj = new Reloj();//Por cada linea se crea un reloj.
-            cout << linea << "\n";
-            int j = linea.length();
-            for (int i = 0; (i < j); i++) {
-                //MANEJO DE NUMERO DE RELOJ
-                if(linea.at(0))
-                {
-                    reloj->setNumero(linea.at(0)-'0');//EL restar '0' es porque es por el pasaje de char en asii con respecto a un int.
-                }
-                //NOMBRE DE RELOJ
-                if(linea.at(i)=='r')//Suponiendo que todos los nombre van a ser del tipo reloj_N°
-                {
-                    reloj->setNombre(linea.substr(2,7));
-                    cout<<"El numero del reloj: "<<reloj->getNumero()<<" cuyo nombre es: "<<reloj->getNombre()<<endl;
-                }
+    int contador = 0;
+    vector<string> words;
+    vector<Reloj> relojes;
 
-                    //MANEJO DE TIPO
-                    if(linea.at(i) == 'p') {
+    while (!lectura.eof()) {
+        contador++;
+        lectura >> cadena;
 
-                        reloj->setTipo("periodico");
-                        cout << "Encontre un reloj de tipo  " << reloj->getTipo() << "\n";
+        words.push_back(cadena);
 
-                    } else if (linea.at(i) == 'a' && linea.at(i + 1) == 'l') {
+        if (contador == 4) {
 
-                        reloj->setTipo("aleatorio");
-                        cout << "Encontre un reloj" << "  " << reloj->getTipo() << "\n";
-                    }
-
-                    //MANEJO DE TIEMPO.
-
-                  if(i==j-1)
-                  {
-                      if(linea.at(j-2)!=' ')
-                      {
-                        reloj->setTiempo(stoi(linea.substr(i-1,i)) );//Stoi es una funcion que cambia de tipo string a int.
-                      } else
-                      {
-                          reloj->setTiempo(linea.at(j-1)- '0');
-                      }
-                      cout<<"El tiempo es: "<< reloj->getTiempo()<<endl;
-                  }
-
-                //CREACION DE EVENTO
+            Reloj reloj = Reloj();
 
 
+            reloj.setNumero(stoi(words[0]));
+            reloj.setNombre(words[1]);
+            reloj.setTipo(words[2]);
+            reloj.setTiempo(stoi(words[3]));
 
 
+            relojes.push_back(reloj);
 
-
-
-
-
-
-
-
-
-
-
-                    /* if(reloj->getTipo()=="periodico")
-                     {
-                        if(reloj->getTiempo()==reloj->getsegundos())
-                        {
-
-                            reloj->segundosPeriodicos();//Seteo segundos periodicos
-                            reloj->delay(reloj->getsegundos());
-                            Reloj<Evento<string>> *evento= new Reloj<Evento<string>>();
-
-
-                        }
-                     }
-                     if(reloj->getTipo()=="aleatorio")
-                     {
-                         reloj->segundosAleatorios();//Seteo segundos aleatorios
-                         reloj->delay(reloj->getsegundos());
-                         Reloj<Evento<string>> *evento= new Reloj<Evento<string>>();
-
-                     }*/
-
-                }
-            }
+            contador = 0;
+            words.clear();
         }
-
-    lectura.close();
     }
+    for(int i=0;i<10;i++){
+        cout<< relojes[i].getNumero()<<"   "<<relojes[i].getNombre()<<" "<<relojes[i].getTipo()<<" "<<relojes[i].getTiempo()<<endl;
 
+
+        relojes[i].setEvento(relojes[i].getTiempo());
+        cout << relojes[i].getEvento().getTiempoe()  << " " <<  relojes[i].getEvento().getTipo() << endl;
+    }
+    lectura.close();
+
+
+
+}

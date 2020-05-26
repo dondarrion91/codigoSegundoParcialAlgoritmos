@@ -1,0 +1,3 @@
+/home/julian/CLionProjects/parcial2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/julian/CLionProjects/parcial2/cmake-build-debug/CMakeFiles/parcial2.dir
+/home/julian/CLionProjects/parcial2/cmake-build-debug/CMakeFiles/edit_cache.dir

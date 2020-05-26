@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/parcial2.dir/main.cpp.o  -o parcial2 

@@ -21,9 +21,6 @@ public:
         this->tipoEvento = "";
     };
 
-    //destructor
-    ~Evento();
-
     // setters
     void setTipo(string evento){
         this->tipoEvento = evento;
@@ -164,7 +161,8 @@ int main() {
     }
 
     for(int i=0;i<100;i++){
-        cout << relojes[i].evento << endl;
+        relojes[i].setEvento(relojes[i].getTiempo());
+        cout << relojes[i].getEvento().getTiempo()  << " " <<  relojes[i].getEvento().getTipo() << endl;
     }
 
     fe.close();

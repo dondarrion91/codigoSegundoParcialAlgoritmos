@@ -52,15 +52,18 @@ private:
     Evento evento;
 public:
     // constructor
-    Reloj(){};
+    Reloj(){
+        evento =  Evento();
+    };
 
     // Metodos
-    void setTiempoEvento(int tiempo){
+    void setEvento(int tiempo){
         if(this->getReloj() == "periodico"){
             evento.setTiempo(tiempo);
             evento.setTipo("periodico");
-        }else if(){
-
+        }else if(this->getReloj() == "aleatorio"){
+            evento.setTiempo(rand() % tiempo);
+            evento.setTipo("aleatorio");
         }
     }
 
@@ -97,6 +100,10 @@ public:
 
     int getTiempo(){
         return this->tiempo;
+    }
+
+    Evento getEvento(){
+        return this->evento;
     }
 
 };
@@ -156,9 +163,9 @@ int main() {
             }
     }
 
-    /*for(int i=0;i<100;i++){
-        cout << relojes[i].getTiempo() << endl;
-    }*/
+    for(int i=0;i<100;i++){
+        cout << relojes[i].evento << endl;
+    }
 
     fe.close();
     return 0;

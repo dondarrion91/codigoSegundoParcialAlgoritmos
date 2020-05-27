@@ -4,10 +4,11 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <ctime>
 
 
 using namespace std;
-
 
 
 // clase Evento
@@ -146,7 +147,9 @@ public:
     {
         while (node != NULL)
         {
-            printf("%d ", node->data.getTiempo());
+            time_t t = time(0) + node->data.getTiempo();
+            tm* now = localtime(&t);
+            getProximoEvento(now,node); // imprime el proximo evento a realizarse
             node = node->next;
         }
         printf("\n");
@@ -262,14 +265,12 @@ public:
         // Crea un evento en el reloj
         reloj.setEvento(reloj.getTiempo());
 
-        cout << reloj.getEvento().getTiempo() << endl;
-
         //Agrega el Reloj a la lista
         push(&relojes,reloj);
     }
 
-    void getProximoEvento(){
-
+    void getProximoEvento(tm* now,struct Node *node){
+        cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
     }
 
     void run(vector<vector<string>> wordsRelojes){
@@ -278,13 +279,14 @@ public:
         for(int i=0;i<100;i++){
             agregarReloj(wordsRelojes[i]);
         }
-        cout << "desordenada" << endl;
-        printList(relojes);
 
+        // ordena los eventos
         quickSort(&relojes);
 
-        cout << "ordenada" << endl;
+        // imprime los eventos
         printList(relojes);
+
+
 
     }
 
@@ -329,6 +331,7 @@ int main() {
     }
 
     planificadorLista.run(wordsRelojes);
+
 
 
     fe.close();

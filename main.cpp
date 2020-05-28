@@ -11,20 +11,32 @@
 using namespace std;
 
 
+
 // clase Evento
 class Evento{
 private:
+    string nombreEvento;
+    int numeroEvento;
     string tipoEvento;
     int tiempoEvento;
 public:
 
     //constructor predeterminado
     Evento(){
+        this->nombreEvento = "";
+        this->numeroEvento = 0;
         this->tiempoEvento = 0;
         this->tipoEvento = "";
     };
 
     // setters
+
+    void setNombreEvento(string nombre){
+        this->nombreEvento = nombre;
+    };
+    void setNumeroEvento(){
+        this->numeroEvento++;
+    };
     void setTipo(string evento){
         this->tipoEvento = evento;
     };
@@ -33,12 +45,22 @@ public:
     };
 
     // getters
+    string getNombreEvento(){
+        return this->nombreEvento;
+    };
+
+    int getNumeroEvento(){
+        return this->numeroEvento;
+    };
+
     string getTipo(){
         return this->tipoEvento;
     };
+
     int getTiempo(){
         return this->tiempoEvento;
     };
+
 };
 
 
@@ -57,13 +79,16 @@ public:
     };
 
     // Metodos
-    void setEvento(int tiempo){
+    void setEvento(int tiempo,string nombreReloj){
+        srand((unsigned) time(0));
         if(this->getReloj() == "periodico"){
             evento.setTiempo(tiempo);
             evento.setTipo("periodico");
+            evento.setNombreEvento(nombreReloj);
         }else if(this->getReloj() == "aleatorio"){
             evento.setTiempo(rand() % tiempo);
             evento.setTipo("aleatorio");
+            evento.setNombreEvento(nombreReloj);
         }
     }
 
@@ -119,7 +144,6 @@ struct Node
 class PlanificadorConLista{
 private:
     struct Node *relojes;
-
 public:
     PlanificadorConLista(){ relojes = NULL; };
 
@@ -147,9 +171,9 @@ public:
     {
         while (node != NULL)
         {
-            time_t t = time(0) + node->data.getTiempo();
+            time_t t = time(0) + node->data.getEvento().getTiempo();
             tm* now = localtime(&t);
-            getProximoEvento(now,node); // imprime el proximo evento a realizarse
+            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
             node = node->next;
         }
         printf("\n");
@@ -175,7 +199,7 @@ public:
         // which is updated in the newHead and newEnd variables
         while (cur != pivot)
         {
-            if (cur->data.getTiempo() < pivot->data.getTiempo())
+            if (cur->data.getEvento().getTiempo() < pivot->data.getEvento().getTiempo())
             {
                 // First node that has a value less than the pivot - becomes
                 // the new head
@@ -263,14 +287,14 @@ public:
         reloj.setTiempoRepe(stoi(words[3]));
 
         // Crea un evento en el reloj
-        reloj.setEvento(reloj.getTiempo());
+        reloj.setEvento(reloj.getTiempo(),reloj.getNombre());
 
         //Agrega el Reloj a la lista
         push(&relojes,reloj);
     }
 
     void getProximoEvento(tm* now,struct Node *node){
-        cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
+
     }
 
     void run(vector<vector<string>> wordsRelojes){
@@ -284,8 +308,22 @@ public:
         quickSort(&relojes);
 
         // imprime los eventos
-        printList(relojes);
+        Node* nuevaLista = relojes;
 
+        int i = 0;
+        while(i< 99){
+
+            time_t t = time(0) + nuevaLista->data.getEvento().getTiempo();
+            tm* now = localtime(&t);
+            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  nuevaLista->data.getEvento().getNombreEvento() << endl;
+            nuevaLista = nuevaLista->next;
+            i++;
+        }
+
+        /*time_t t = time(0) + node->data.getEvento().getTiempo();
+        tm* now = localtime(&t);
+        cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
+*/
 
 
     }

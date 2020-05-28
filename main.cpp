@@ -11,183 +11,7 @@
 
 using namespace std;
 
-// Lista
-template <typename T>
-struct Node
-{
-    T data;
-    struct Node *next;
-    // agregar elementos a la lista
-    void push(struct Node<T>** head_ref, T new_data)
-    {
-        /* allocate node */
-        struct Node* new_node = new Node;
-
-        /* put in the data */
-        new_node->data = new_data;
-
-        /* link the old list off the new node */
-        new_node->next = (*head_ref);
-
-        /* move the head to point to the new node */
-        (*head_ref) = new_node;
-    }
-
-    // imprimir lista
-    void printList(struct Node *node)
-    {
-        while (node != NULL)
-        {
-
-            time_t t = time(0) + node->data.getTiempo();
-            tm* now = localtime(&t);
-            cout
-                << now->tm_mday
-                << "-"
-                << now->tm_mon
-                << "-"
-                << now->tm_year+1900
-                << " "
-                << now->tm_hour
-                << ":"
-                <<  now->tm_min
-                << ":"
-                << now->tm_sec
-                << " "
-                << node->data.getNombreEvento()
-                << " Evento "
-                << node->data.getNumeroEvento()
-                << endl;
-
-            node = node->next;
-        }
-        printf("\n");
-    }
-
-    // retorna la cola de la lista
-    struct Node *getTail(struct Node *cur)
-    {
-        while (cur != NULL && cur->next != NULL)
-            cur = cur->next;
-        return cur;
-    }
-
-    // retorna la cola de la lista
-    int size(Node<T> *head){
-        int contador = 0;
-        Node<T>* cur = head;
-        while (cur != NULL){
-            contador++;
-            cur = cur->next;
-        }
-        return contador;
-    }
-
-    Node<T>* GetNth(Node<T>* head, int index)
-    {
-        Node<T>* current = head;
-
-        int count = 0;
-        while (current != NULL)
-        {
-            if (count == index)
-                return current;
-            count++;
-            current = current->next;
-        }
-
-    }
-
-    // retorna el elemento pivote
-    struct Node *partition(struct Node *head, struct Node *end,
-                           struct Node **newHead, struct Node **newEnd)
-    {
-        struct Node *pivot = end;
-        struct Node *prev = NULL, *cur = head, *tail = pivot;
-
-        // During partition, both the head and end of the list might change
-        // which is updated in the newHead and newEnd variables
-        while (cur != pivot)
-        {
-            if (cur->data.getTiempo() < pivot->data.getTiempo())
-            {
-                // First node that has a value less than the pivot - becomes
-                // the new head
-                if ((*newHead) == NULL)
-                    (*newHead) = cur;
-
-                prev = cur;
-                cur = cur->next;
-            }
-            else // If cur node is greater than pivot
-            {
-                // Move cur node to next of tail, and change tail
-                if (prev)
-                    prev->next = cur->next;
-                struct Node *tmp = cur->next;
-                cur->next = NULL;
-                tail->next = cur;
-                tail = cur;
-                cur = tmp;
-            }
-        }
-
-        // If the pivot data is the smallest element in the current list,
-        // pivot becomes the head
-        if ((*newHead) == NULL)
-            (*newHead) = pivot;
-
-        // Update newEnd to the current last node
-        (*newEnd) = tail;
-
-        // Return the pivot node
-        return pivot;
-    }
-
-    // metodo recursivo de ordenamiento Quicksort
-    struct Node *quickSortRecur(struct Node *head, struct Node *end)
-    {
-        // base condition
-        if (!head || head == end)
-            return head;
-
-        Node *newHead = NULL, *newEnd = NULL;
-
-        // Partition the list, newHead and newEnd will be updated
-        // by the partition function
-        struct Node *pivot = partition(head, end, &newHead, &newEnd);
-
-        // If pivot is the smallest element - no need to recur for
-        // the left part.
-        if (newHead != pivot)
-        {
-            // Set the node before the pivot node as NULL
-            struct Node *tmp = newHead;
-            while (tmp->next != pivot)
-                tmp = tmp->next;
-            tmp->next = NULL;
-
-            // Recur for the list before pivot
-            newHead = quickSortRecur(newHead, tmp);
-
-            // Change next of last node of the left half to pivot
-            tmp = getTail(newHead);
-            tmp->next = pivot;
-        }
-
-        // Recur for the list after the pivot element
-        pivot->next = quickSortRecur(pivot->next, newEnd);
-
-        return newHead;
-    }
-
-    // metodo envoltorio del emtodo recursivo
-    void quickSort(struct Node **headRef)
-    {
-        (*headRef) = quickSortRecur(*headRef, getTail(*headRef));
-        return;
-    }
-};
+#include "Lista.h"
 
 // clase Evento
 class Evento{
@@ -319,8 +143,8 @@ public:
 // Planificador con lista y QuickSort
 class PlanificadorConLista{
 private:
-    struct Node<Reloj> *relojes;
-    struct Node<Evento> *eventos;
+    struct Lista<Reloj> *relojes;
+    struct Lista<Evento> *eventos;
 public:
     PlanificadorConLista(vector<vector<string>> wordsRelojes){
         relojes = NULL;
@@ -334,7 +158,7 @@ public:
             Reloj relojActual = relojes->GetNth(relojes,i)->data;
             int contador=0;
             srand (time(NULL));
-            for(int j=0;j<4;j++){
+            for(int j=0;j<20;j++){
                 contador++;
                 int random = rand();
                 if(relojActual.getReloj() == "periodico"){
@@ -372,39 +196,66 @@ public:
 
     }
 
-    void getProximoEvento(tm* now,struct Node<Reloj> *node){
-
+    Evento getProximoEvento(int i){
+        return eventos->GetNth(eventos,i)->data;
     }
 
     void run(){
-        /*int contador = 0;
-        for(int i=0;i<9999;i++){
-            contador++;
+        int fin = 1,k=0;
 
-        }
-*/
         // ordena los eventos
         eventos->quickSort(&eventos);
 
-        eventos->printList(eventos);
-
-        /*// imprime los eventos
-        Node* nuevaLista = relojes;
-
-        int i = 0;
-        while(i< 999){
-
-            time_t t = time(0) + nuevaLista->data.getEvento().getTiempo();
+        while(fin == 1){
+            Evento proximoEvento = getProximoEvento(k);
+            time_t t = time(0) + proximoEvento.getTiempo();
             tm* now = localtime(&t);
-            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  nuevaLista->data.getEvento().getNombreEvento() << endl;
-            nuevaLista = nuevaLista->next;
-            i++;
-        }*/
+            cout
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << proximoEvento.getNombreEvento()
+                << " Evento "
+                << proximoEvento.getNumeroEvento()
+                << endl;
 
-        /*time_t t = time(0) + node->data.getEvento().getTiempo();
-        tm* now = localtime(&t);
-        cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
-*/
+            k++;
+
+            // si se ejecutan 500 eventos pregunta al usuario si quiere agregar 50 eventos
+            if((k%500) == 0){
+                cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0";cin >> fin;
+                if(fin == 1){
+                    for(int i=0;i<50;i++){
+                        Reloj relojActual = relojes->GetNth(relojes,i)->data;
+                        int contador=0;
+                        srand (time(NULL));
+                        for(int j=0;j<1;j++){
+                            contador++;
+                            int random = rand();
+                            if(relojActual.getReloj() == "periodico"){
+                                relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
+                            }else if(relojActual.getReloj() == "aleatorio"){
+                                relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
+                            }
+                            eventos->push(&eventos,relojActual.getEvento());
+                            srand (contador);
+                        }
+                    }
+
+                    // vuelve a ordenar los eventos
+                    eventos->quickSort(&eventos);
+                }
+            }
+        }
 
 
     }

@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+/home/julian/CLionProjects/parcial2/Lista.h
+iostream
+-
+fstream
+-
+stdlib.h
+-
+sstream
+-
+cstdlib
+-
+string
+-
+vector
+-
+chrono
+-
+ctime
+-
+
 /home/julian/CLionProjects/parcial2/main.cpp
 iostream
 -
@@ -25,4 +45,6 @@ chrono
 -
 ctime
 -
+Lista.h
+/home/julian/CLionProjects/parcial2/Lista.h
 

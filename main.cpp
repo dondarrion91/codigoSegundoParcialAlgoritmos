@@ -10,148 +10,14 @@
 
 using namespace std;
 
-
-
-// clase Evento
-class Evento{
-private:
-    string nombreEvento;
-    int numeroEvento;
-    string tipoEvento;
-    int tiempoEvento;
-public:
-
-    //constructor predeterminado
-    Evento(){
-        this->nombreEvento = "";
-        this->numeroEvento = 0;
-        this->tiempoEvento = 0;
-        this->tipoEvento = "";
-    };
-
-    // setters
-
-    void setNombreEvento(string nombre){
-        this->nombreEvento = nombre;
-    };
-    void setNumeroEvento(){
-        this->numeroEvento++;
-    };
-    void setTipo(string evento){
-        this->tipoEvento = evento;
-    };
-    void setTiempo(int tiempo){
-        this->tiempoEvento = tiempo;
-    };
-
-    // getters
-    string getNombreEvento(){
-        return this->nombreEvento;
-    };
-
-    int getNumeroEvento(){
-        return this->numeroEvento;
-    };
-
-    string getTipo(){
-        return this->tipoEvento;
-    };
-
-    int getTiempo(){
-        return this->tiempoEvento;
-    };
-
-};
-
-
-// clase Reloj
-class Reloj{
-private:
-    int numReloj;
-    string nombreReloj;
-    string tipoReloj;
-    int tiempo;
-    Evento evento;
-public:
-    // constructor
-    Reloj(){
-        evento =  Evento();
-    };
-
-    // Metodos
-    void setEvento(int tiempo,string nombreReloj){
-        srand((unsigned) time(0));
-        if(this->getReloj() == "periodico"){
-            evento.setTiempo(tiempo);
-            evento.setTipo("periodico");
-            evento.setNombreEvento(nombreReloj);
-        }else if(this->getReloj() == "aleatorio"){
-            evento.setTiempo(rand() % tiempo);
-            evento.setTipo("aleatorio");
-            evento.setNombreEvento(nombreReloj);
-        }
-    }
-
-    // setters
-    void setNumero(int numero){
-        this->numReloj = numero;
-    };
-
-    void setNombre(string nombre){
-        this->nombreReloj = nombre;
-    };
-
-    void setReloj(string tipo){
-        this->tipoReloj = tipo;
-    };
-
-    void setTiempoRepe(int tiempo){
-        this->tiempo = tiempo;
-    }
-
-    // getters
-
-    int getNumero(){
-        return this->numReloj;
-    };
-
-    string getNombre(){
-       return this->nombreReloj;
-    };
-
-    string getReloj(){
-        return this->tipoReloj;
-    };
-
-    int getTiempo(){
-        return this->tiempo;
-    }
-
-    Evento getEvento(){
-        return this->evento;
-    }
-
-};
-
 // Lista
+template <typename T>
 struct Node
 {
-    Reloj data;
+    T data;
     struct Node *next;
-};
-
-// Planificador con lista y QuickSort
-class PlanificadorConLista{
-private:
-    struct Node *relojes;
-public:
-    PlanificadorConLista(){ relojes = NULL; };
-
-
-    // metodos
-
     // agregar elementos a la lista
-    void push(struct Node** head_ref, Reloj new_data)
+    void push(struct Node<T>** head_ref, T new_data)
     {
         /* allocate node */
         struct Node* new_node = new Node;
@@ -171,9 +37,10 @@ public:
     {
         while (node != NULL)
         {
-            time_t t = time(0) + node->data.getEvento().getTiempo();
+
+            time_t t = time(0) + node->data.getTiempo();
             tm* now = localtime(&t);
-            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  node->data.getNombre() << endl;
+            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << endl;
             node = node->next;
         }
         printf("\n");
@@ -187,7 +54,6 @@ public:
         return cur;
     }
 
-
     // retorna el elemento pivote
     struct Node *partition(struct Node *head, struct Node *end,
                            struct Node **newHead, struct Node **newEnd)
@@ -199,7 +65,7 @@ public:
         // which is updated in the newHead and newEnd variables
         while (cur != pivot)
         {
-            if (cur->data.getEvento().getTiempo() < pivot->data.getEvento().getTiempo())
+            if (cur->data.getTiempo() < pivot->data.getTiempo())
             {
                 // First node that has a value less than the pivot - becomes
                 // the new head
@@ -277,6 +143,165 @@ public:
         (*headRef) = quickSortRecur(*headRef, getTail(*headRef));
         return;
     }
+};
+
+// clase Evento
+class Evento{
+private:
+    string nombreEvento;
+    int numeroEvento;
+    string tipoEvento;
+    int tiempoEvento;
+public:
+
+    //constructor predeterminado
+    Evento(){
+        this->nombreEvento = "";
+        this->numeroEvento = 0;
+        this->tiempoEvento = 0;
+        this->tipoEvento = "";
+    };
+
+    // setters
+
+    void setNombreEvento(string nombre){
+        this->nombreEvento = nombre;
+    };
+    void setNumeroEvento(){
+        this->numeroEvento++;
+    };
+    void setTipo(string evento){
+        this->tipoEvento = evento;
+    };
+    void setTiempo(int tiempo){
+        this->tiempoEvento = tiempo;
+    };
+
+    // getters
+    string getNombreEvento(){
+        return this->nombreEvento;
+    };
+
+    int getNumeroEvento(){
+        return this->numeroEvento;
+    };
+
+    string getTipo(){
+        return this->tipoEvento;
+    };
+
+    int getTiempo(){
+        return this->tiempoEvento;
+    };
+
+};
+
+
+// clase Reloj
+class Reloj{
+private:
+    int numReloj;
+    string nombreReloj;
+    string tipoReloj;
+    int tiempo;
+    struct Node<Evento> *eventos;
+public:
+    // constructor
+    Reloj(){
+        eventos =  NULL;
+    };
+
+    // Metodos
+    void setEvento(int tiempo,string nombreReloj){
+        srand((unsigned) time(0));
+        Evento evento;
+        if(this->getReloj() == "periodico"){
+            evento.setTiempo(tiempo);
+            evento.setTipo("periodico");
+            evento.setNombreEvento(nombreReloj);
+        }else if(this->getReloj() == "aleatorio"){
+            evento.setTiempo(rand() % tiempo);
+            evento.setTipo("aleatorio");
+            evento.setNombreEvento(nombreReloj);
+        }
+
+        eventos->push(&eventos,evento);
+    }
+
+    // setters
+    void setNumero(int numero){
+        this->numReloj = numero;
+    };
+
+    void setNombre(string nombre){
+        this->nombreReloj = nombre;
+    };
+
+    void setReloj(string tipo){
+        this->tipoReloj = tipo;
+    };
+
+    void setTiempoRepe(int tiempo){
+        this->tiempo = tiempo;
+    }
+
+    void finalizarEvento(){
+        eventos = eventos->next;
+    }
+
+    // getters
+
+    int getNumero(){
+        return this->numReloj;
+    };
+
+    string getNombre(){
+       return this->nombreReloj;
+    };
+
+    string getReloj(){
+        return this->tipoReloj;
+    };
+
+    int getTiempo(){
+        return this->tiempo;
+    }
+
+    struct Node<Evento>* getEventos(){
+        return this->eventos;
+    }
+
+    Evento getEvento(){
+        return this->eventos->data;
+    }
+
+};
+
+
+
+
+
+// Planificador con lista y QuickSort
+class PlanificadorConLista{
+private:
+    struct Node<Reloj> *relojes;
+public:
+    PlanificadorConLista(vector<vector<string>> wordsRelojes){
+        relojes = NULL;
+        // agrega todos los relojes
+        for(int i=0;i<100;i++){
+            agregarReloj(wordsRelojes[i]);
+        }
+
+       /* // Crea los primeros eventos
+        for(int i=0;i<100;i++){
+            eventos->push(&eventos,relojes->data.setEvento(relojes->data.getTiempo(),relojes->data.getNombre()));
+            relojes = relojes->next;
+        }*/
+    };
+
+
+    // metodos
 
     void agregarReloj(vector<string> words){
         // Crea un reloj
@@ -286,39 +311,33 @@ public:
         reloj.setReloj(words[2]);
         reloj.setTiempoRepe(stoi(words[3]));
 
-        // Crea un evento en el reloj
-        reloj.setEvento(reloj.getTiempo(),reloj.getNombre());
-
         //Agrega el Reloj a la lista
-        push(&relojes,reloj);
+        relojes->push(&relojes,reloj);
     }
 
-    void getProximoEvento(tm* now,struct Node *node){
+    void getProximoEvento(tm* now,struct Node<Reloj> *node){
 
     }
 
-    void run(vector<vector<string>> wordsRelojes){
-
-        // agrega un reloj y crea un evento
-        for(int i=0;i<100;i++){
-            agregarReloj(wordsRelojes[i]);
-        }
+    void run(){
 
         // ordena los eventos
-        quickSort(&relojes);
+        relojes->quickSort(&relojes);
 
-        // imprime los eventos
+        relojes->printList(relojes);
+
+        /*// imprime los eventos
         Node* nuevaLista = relojes;
 
         int i = 0;
-        while(i< 99){
+        while(i< 999){
 
             time_t t = time(0) + nuevaLista->data.getEvento().getTiempo();
             tm* now = localtime(&t);
             cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << " " <<  nuevaLista->data.getEvento().getNombreEvento() << endl;
             nuevaLista = nuevaLista->next;
             i++;
-        }
+        }*/
 
         /*time_t t = time(0) + node->data.getEvento().getTiempo();
         tm* now = localtime(&t);
@@ -352,9 +371,6 @@ int main() {
     vector<string> words; // vector con cada parametro del reloj
     vector<vector<string>> wordsRelojes;  // vector de vectores con el contenido de words
 
-    // Lista con quicksort
-    PlanificadorConLista planificadorLista = PlanificadorConLista();
-
     while (!fe.eof()) {
             contador ++;
             fe >> cadena;
@@ -368,7 +384,10 @@ int main() {
             }
     }
 
-    planificadorLista.run(wordsRelojes);
+    // Lista con quicksort
+    PlanificadorConLista planificadorLista = PlanificadorConLista(wordsRelojes);
+
+    planificadorLista.run();
 
 
 

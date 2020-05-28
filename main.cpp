@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 #include <sstream>
 #include <cstdlib>
 #include <string>
@@ -40,7 +41,24 @@ struct Node
 
             time_t t = time(0) + node->data.getTiempo();
             tm* now = localtime(&t);
-            cout << now->tm_mday << "-" << now->tm_mon << "-" << now->tm_year+1900 << " " << now->tm_hour << ":" <<  now->tm_min << ":" << now->tm_sec << endl;
+            cout
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << node->data.getNombreEvento()
+                << " Evento "
+                << node->data.getNumeroEvento()
+                << endl;
+
             node = node->next;
         }
         printf("\n");
@@ -52,6 +70,32 @@ struct Node
         while (cur != NULL && cur->next != NULL)
             cur = cur->next;
         return cur;
+    }
+
+    // retorna la cola de la lista
+    int size(Node<T> *head){
+        int contador = 0;
+        Node<T>* cur = head;
+        while (cur != NULL){
+            contador++;
+            cur = cur->next;
+        }
+        return contador;
+    }
+
+    Node<T>* GetNth(Node<T>* head, int index)
+    {
+        Node<T>* current = head;
+
+        int count = 0;
+        while (current != NULL)
+        {
+            if (count == index)
+                return current;
+            count++;
+            current = current->next;
+        }
+
     }
 
     // retorna el elemento pivote
@@ -204,29 +248,25 @@ private:
     string nombreReloj;
     string tipoReloj;
     int tiempo;
-    struct Node<Evento> *eventos;
+    Evento evento;
 public:
     // constructor
     Reloj(){
-        eventos =  NULL;
+        evento = Evento();
     };
 
     // Metodos
-    void setEvento(int tiempo,string nombreReloj){
-        srand((unsigned) time(0));
-        Evento evento;
-        if(this->getReloj() == "periodico"){
-            evento.setTiempo(tiempo);
-            evento.setTipo("periodico");
-            evento.setNombreEvento(nombreReloj);
-        }else if(this->getReloj() == "aleatorio"){
-            evento.setTiempo(rand() % tiempo);
-            evento.setTipo("aleatorio");
-            evento.setNombreEvento(nombreReloj);
-        }
-
-        eventos->push(&eventos,evento);
+    Evento setEvento(int tiempo,string nombreReloj){
+        this->evento.setTiempo(tiempo);
+        this->evento.setNombreEvento(nombreReloj);
+        this->evento.setNumeroEvento();
+        return evento;
     }
+
+    void finalizarEvento(){
+        this->evento = Evento();
+    }
+
 
     // setters
     void setNumero(int numero){
@@ -245,9 +285,7 @@ public:
         this->tiempo = tiempo;
     }
 
-    void finalizarEvento(){
-        eventos = eventos->next;
-    }
+
 
     // getters
 
@@ -267,12 +305,9 @@ public:
         return this->tiempo;
     }
 
-    struct Node<Evento>* getEventos(){
-        return this->eventos;
-    }
 
     Evento getEvento(){
-        return this->eventos->data;
+        return this->evento;
     }
 
 };
@@ -285,12 +320,31 @@ public:
 class PlanificadorConLista{
 private:
     struct Node<Reloj> *relojes;
+    struct Node<Evento> *eventos;
 public:
     PlanificadorConLista(vector<vector<string>> wordsRelojes){
         relojes = NULL;
+        eventos = NULL;
         // agrega todos los relojes
-        for(int i=0;i<100;i++){
+        for(int i=0;i<wordsRelojes.size();i++){
             agregarReloj(wordsRelojes[i]);
+        }
+
+        for(int i=0;i<relojes->size(relojes);i++){
+            Reloj relojActual = relojes->GetNth(relojes,i)->data;
+            int contador=0;
+            srand (time(NULL));
+            for(int j=0;j<4;j++){
+                contador++;
+                int random = rand();
+                if(relojActual.getReloj() == "periodico"){
+                    relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
+                }else if(relojActual.getReloj() == "aleatorio"){
+                    relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
+                }
+                eventos->push(&eventos,relojActual.getEvento());
+                srand (contador);
+            }
         }
 
        /* // Crea los primeros eventos
@@ -311,8 +365,11 @@ public:
         reloj.setReloj(words[2]);
         reloj.setTiempoRepe(stoi(words[3]));
 
+
         //Agrega el Reloj a la lista
         relojes->push(&relojes,reloj);
+
+
     }
 
     void getProximoEvento(tm* now,struct Node<Reloj> *node){
@@ -320,11 +377,16 @@ public:
     }
 
     void run(){
+        /*int contador = 0;
+        for(int i=0;i<9999;i++){
+            contador++;
 
+        }
+*/
         // ordena los eventos
-        relojes->quickSort(&relojes);
+        eventos->quickSort(&eventos);
 
-        relojes->printList(relojes);
+        eventos->printList(eventos);
 
         /*// imprime los eventos
         Node* nuevaLista = relojes;

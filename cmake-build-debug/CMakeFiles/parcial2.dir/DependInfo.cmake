@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/julian/CLionProjects/parcial2/main.cpp" "/home/julian/CLionProjects/parcial2/cmake-build-debug/CMakeFiles/parcial2.dir/main.cpp.o"
+  "/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp" "/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/cmake-build-debug/CMakeFiles/parcial2.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

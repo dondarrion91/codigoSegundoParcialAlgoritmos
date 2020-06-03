@@ -12,6 +12,7 @@
 using namespace std;
 
 #include "Lista.h"
+#include "Heap.h"
 
 // clase Evento
 class Evento{
@@ -154,27 +155,7 @@ public:
             agregarReloj(wordsRelojes[i]);
         }
 
-        for(int i=0;i<relojes->size(relojes);i++){
-            Reloj relojActual = relojes->GetNth(relojes,i)->data;
-            int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
-            srand (time(NULL));
-            for(int j=0;j<20;j++){
 
-                int random = rand();
-                if(relojActual.getReloj() == "periodico"){
-                    relojActual.setEvento(u,relojActual.getNombre());
-                }else if(relojActual.getReloj() == "aleatorio"){
-                    relojActual.setEvento(v,relojActual.getNombre());
-                }
-
-                u += relojActual.getTiempo();
-                v += 1+rand()%relojActual.getTiempo();
-
-                eventos->push(&eventos,relojActual.getEvento());
-
-
-            }
-        }
 
        /* // Crea los primeros eventos
         for(int i=0;i<100;i++){
@@ -206,6 +187,29 @@ public:
     }
 
     void run(){
+
+        for(int i=0;i<relojes->size(relojes);i++){
+            Reloj relojActual = relojes->GetNth(relojes,i)->data;
+            int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
+            srand (time(NULL));
+            for(int j=0;j<20;j++){
+
+                int random = rand();
+                if(relojActual.getReloj() == "periodico"){
+                    relojActual.setEvento(u,relojActual.getNombre());
+                }else if(relojActual.getReloj() == "aleatorio"){
+                    relojActual.setEvento(v,relojActual.getNombre());
+                }
+
+                u += relojActual.getTiempo();
+                v += 1+rand()%relojActual.getTiempo();
+
+                eventos->push(&eventos,relojActual.getEvento());
+
+
+            }
+        }
+
         int fin = 1,k=0;
 
         // ordena los eventos
@@ -271,6 +275,81 @@ public:
 
 };
 
+class PlanificadorConHeap{
+private:
+    vector<Evento> eventos;
+    vector<Reloj> relojes;
+public:
+    PlanificadorConHeap(vector<vector<string>> wordsRelojes){
+        for(int i=0;i< wordsRelojes.size();i++){
+            agregarReloj(wordsRelojes[i]);
+        }
+    };
+
+    void agregarReloj(vector<string> words){
+        // Crea un reloj
+        Reloj reloj = Reloj();
+        reloj.setNumero(stoi(words[0]));
+        reloj.setNombre(words[1]);
+        reloj.setReloj(words[2]);
+        reloj.setTiempoRepe(stoi(words[3]));
+
+
+        //Agrega el Reloj al vector
+        relojes.push_back(reloj);
+    }
+
+    void run(){
+        for(int i=0;i<relojes.size();i++){
+            int u=relojes[i].getTiempo(),
+            v=1+rand()%relojes[i].getTiempo();
+            for(int j=0;j<5;j++){
+                if(relojes[i].getReloj() == "periodico"){
+                    relojes[i].setEvento(u,relojes[i].getNombre());
+                }else if(relojes[i].getReloj() == "aleatorio"){
+                    relojes[i].setEvento(v,relojes[i].getNombre());
+                }
+
+                u += relojes[i].getTiempo();
+                v += 1+rand()%relojes[i].getTiempo();
+
+                eventos.push_back(relojes[i].getEvento());
+            }
+
+
+
+            int n = eventos.size();
+            heapSort(eventos,n);
+
+
+
+            for(int i=0;i<eventos.size();i++){
+
+                time_t t = time(0) + eventos[i].getTiempo();
+                tm* now = localtime(&t);
+                cout
+                        << now->tm_mday
+                        << "-"
+                        << now->tm_mon
+                        << "-"
+                        << now->tm_year+1900
+                        << " "
+                        << now->tm_hour
+                        << ":"
+                        <<  now->tm_min
+                        << ":"
+                        << now->tm_sec
+                        << " "
+                        << eventos[i].getNombreEvento()
+                        << " Evento "
+                        << eventos[i].getNumeroEvento()
+                        << endl;
+            }
+
+        }
+    }
+};
+
 int main() {
     string cadena;
     /*int aleatorio;
@@ -306,10 +385,22 @@ int main() {
             }
     }
 
-    // Lista con quicksort
-    PlanificadorConLista planificadorLista = PlanificadorConLista(wordsRelojes);
+    char opcion;
+    cout << "Elije tu algoritmo de ordenamiento: " << endl;
+    cout << "Presiona 1 para Quicksort: " << endl;
+    cout << "Presiona 2 para Heapsort: " << endl;
+    cout << "Presiona cualquier otra tecla para salir: ";cin >> opcion;
 
-    planificadorLista.run();
+    if(opcion == '1'){
+        // Lista con quicksort
+        PlanificadorConLista planificadorLista = PlanificadorConLista(wordsRelojes);
+        planificadorLista.run();
+    }else if(opcion == '2'){
+
+        PlanificadorConHeap planificadorConHeap = PlanificadorConHeap(wordsRelojes);
+        planificadorConHeap.run();
+
+    }
 
 
 

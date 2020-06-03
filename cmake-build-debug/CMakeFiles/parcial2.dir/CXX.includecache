@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
+iostream
+-
+vector
+-
+
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
 iostream
 -
@@ -47,4 +53,6 @@ ctime
 -
 Lista.h
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
+Heap.h
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
 

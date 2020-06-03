@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/julian/CLionProjects/parcial2/Lista.h
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
 iostream
 -
 fstream
@@ -26,7 +26,7 @@ chrono
 ctime
 -
 
-/home/julian/CLionProjects/parcial2/main.cpp
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp
 iostream
 -
 fstream
@@ -46,5 +46,5 @@ chrono
 ctime
 -
 Lista.h
-/home/julian/CLionProjects/parcial2/Lista.h
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
 

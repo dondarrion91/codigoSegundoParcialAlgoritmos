@@ -156,18 +156,23 @@ public:
 
         for(int i=0;i<relojes->size(relojes);i++){
             Reloj relojActual = relojes->GetNth(relojes,i)->data;
-            int contador=0;
+            int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
             srand (time(NULL));
             for(int j=0;j<20;j++){
-                contador++;
+
                 int random = rand();
                 if(relojActual.getReloj() == "periodico"){
-                    relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
+                    relojActual.setEvento(u,relojActual.getNombre());
                 }else if(relojActual.getReloj() == "aleatorio"){
-                    relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
+                    relojActual.setEvento(v,relojActual.getNombre());
                 }
+
+                u += relojActual.getTiempo();
+                v += 1+rand()%relojActual.getTiempo();
+
                 eventos->push(&eventos,relojActual.getEvento());
-                srand (contador);
+
+
             }
         }
 
@@ -236,18 +241,22 @@ public:
                 if(fin == 1){
                     for(int i=0;i<50;i++){
                         Reloj relojActual = relojes->GetNth(relojes,i)->data;
-                        int contador=0;
+                        int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
                         srand (time(NULL));
                         for(int j=0;j<1;j++){
-                            contador++;
+
                             int random = rand();
                             if(relojActual.getReloj() == "periodico"){
                                 relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
                             }else if(relojActual.getReloj() == "aleatorio"){
                                 relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
                             }
+
+                            u+=relojActual.getTiempo();
+                            v+=1+rand()%relojActual.getTiempo();
+
                             eventos->push(&eventos,relojActual.getEvento());
-                            srand (contador);
+
                         }
                     }
 

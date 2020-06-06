@@ -300,54 +300,87 @@ public:
     }
 
     void run(){
-        for(int i=0;i<relojes.size();i++){
-            int u=relojes[i].getTiempo(),
-            v=1+rand()%relojes[i].getTiempo();
-            for(int j=0;j<5;j++){
-                if(relojes[i].getReloj() == "periodico"){
-                    relojes[i].setEvento(u,relojes[i].getNombre());
-                }else if(relojes[i].getReloj() == "aleatorio"){
-                    relojes[i].setEvento(v,relojes[i].getNombre());
+        for(int i=0;i<relojes.size();i++) {
+            int u = relojes[i].getTiempo(),
+                    v = 1 + rand() % relojes[i].getTiempo();
+            for (int j = 0; j < 10; j++) {
+                if (relojes[i].getReloj() == "periodico") {
+                    relojes[i].setEvento(u, relojes[i].getNombre());
+                } else if (relojes[i].getReloj() == "aleatorio") {
+                    relojes[i].setEvento(v, relojes[i].getNombre());
                 }
 
                 u += relojes[i].getTiempo();
-                v += 1+rand()%relojes[i].getTiempo();
+                v += 1 + rand() % relojes[i].getTiempo();
 
                 eventos.push_back(relojes[i].getEvento());
             }
 
 
+        }
 
-            int n = eventos.size();
-            heapSort(eventos,n);
+        int n = eventos.size();
+        heapSort(eventos, n);
 
+        int fin = 1,k=0;
 
+        while(fin == 1){
 
-            for(int i=0;i<eventos.size();i++){
+            time_t t = time(0) + eventos[k].getTiempo();
+            tm* now = localtime(&t);
+            cout
+                    << now->tm_mday
+                    << "-"
+                    << now->tm_mon
+                    << "-"
+                    << now->tm_year+1900
+                    << " "
+                    << now->tm_hour
+                    << ":"
+                    <<  now->tm_min
+                    << ":"
+                    << now->tm_sec
+                    << " "
+                    << eventos[k].getNombreEvento()
+                    << " Evento "
+                    << eventos[k].getNumeroEvento()
+                    << endl;
 
-                time_t t = time(0) + eventos[i].getTiempo();
-                tm* now = localtime(&t);
-                cout
-                        << now->tm_mday
-                        << "-"
-                        << now->tm_mon
-                        << "-"
-                        << now->tm_year+1900
-                        << " "
-                        << now->tm_hour
-                        << ":"
-                        <<  now->tm_min
-                        << ":"
-                        << now->tm_sec
-                        << " "
-                        << eventos[i].getNombreEvento()
-                        << " Evento "
-                        << eventos[i].getNumeroEvento()
-                        << endl;
+            k++;
+
+            if((k%500) == 0){
+                cout << "Quieres 50 eventos mas?? presiona 1";cin >> fin;
+                if(fin != 1){
+                    break;
+                }else{
+                    for(int i=0;i<10;i++) {
+                        int u = relojes[i].getTiempo(),
+                                v = 1 + rand() % relojes[i].getTiempo();
+                        for (int j = 0; j < 5; j++) {
+                            if (relojes[i].getReloj() == "periodico") {
+                                relojes[i].setEvento(u, relojes[i].getNombre());
+                            } else if (relojes[i].getReloj() == "aleatorio") {
+                                relojes[i].setEvento(v, relojes[i].getNombre());
+                            }
+
+                            u += relojes[i].getTiempo();
+                            v += 1 + rand() % relojes[i].getTiempo();
+
+                            cout << relojes[i].getEvento().getTiempo() << endl;
+
+                            eventos.push_back(relojes[i].getEvento());
+                        }
+                    }
+                    int n = eventos.size();
+                    heapSort(eventos, n);
+                }
             }
+        }
+
+
 
         }
-    }
+
 };
 
 int main() {

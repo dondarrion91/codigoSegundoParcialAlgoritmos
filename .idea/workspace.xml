@@ -31,9 +31,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b01fcb63-750d-40e3-b39b-f5dca0a4fcb2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parcial2.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/parcial2.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/parcial2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/parcial2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +94,7 @@
       <workItem from="1590587451461" duration="23332000" />
       <workItem from="1590673178288" duration="15969000" />
       <workItem from="1591193368017" duration="23043000" />
+      <workItem from="1591484057809" duration="494000" />
     </task>
     <servers />
   </component>
@@ -116,22 +114,22 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1316" height="216" key="GridCell.Tab.0.bottom" timestamp="1591231406777">
+    <state width="1316" height="477" key="GridCell.Tab.0.bottom" timestamp="1591484553288">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="216" key="GridCell.Tab.0.bottom/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591231406777" />
-    <state width="1316" height="216" key="GridCell.Tab.0.center" timestamp="1591231406777">
+    <state width="1316" height="477" key="GridCell.Tab.0.bottom/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591484553288" />
+    <state width="1316" height="477" key="GridCell.Tab.0.center" timestamp="1591484553288">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="216" key="GridCell.Tab.0.center/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591231406777" />
-    <state width="1316" height="216" key="GridCell.Tab.0.left" timestamp="1591231406777">
+    <state width="1316" height="477" key="GridCell.Tab.0.center/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591484553288" />
+    <state width="1316" height="477" key="GridCell.Tab.0.left" timestamp="1591484553287">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="216" key="GridCell.Tab.0.left/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591231406777" />
-    <state width="1316" height="216" key="GridCell.Tab.0.right" timestamp="1591231406777">
+    <state width="1316" height="477" key="GridCell.Tab.0.left/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591484553287" />
+    <state width="1316" height="477" key="GridCell.Tab.0.right" timestamp="1591484553288">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="216" key="GridCell.Tab.0.right/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591231406777" />
+    <state width="1316" height="477" key="GridCell.Tab.0.right/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591484553288" />
     <state width="1316" height="216" key="GridCell.Tab.1.bottom" timestamp="1591231406778">
       <screen x="0" y="0" width="1366" height="737" />
     </state>

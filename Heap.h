@@ -10,13 +10,13 @@ using namespace std;
 #define PARCIAL2_HEAP_H
 int cch=0;
 template<typename T>
-void heapify(vector<T> &arr, int n, int i)
+void heapify(vector<T> &arr, int n, int i)  //2º: Recordar que en Heap el padre debe ser el mayor
 {
     int largest = i; //el mas grande va a ser i //padre
     int l = 2*i + 1; //hijo izquierdo
     int r = 2*i + 2; //hijo derecho
 
-    // Si el hijo izquierdo es mas grande que la raiz
+    // Si el hijo izquierdo es mas grande que el padre
     if (l < n && arr[l].getTiempo() > arr[largest].getTiempo())     //si el tiempo l es mas grande que el de largest
         {largest = l;
         }

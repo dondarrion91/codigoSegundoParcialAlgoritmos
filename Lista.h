@@ -116,7 +116,6 @@ struct Lista
     // metodo recursivo de ordenamiento Quicksort
     struct Lista *quickSortRecur(struct Lista *head, struct Lista *end) // 2º: aca viene el puntero a la cabeza, y el puntero al ultimo
     {
-        // base condition
         if (!head || head == end){       //esto devuelve la cabeza si es el unico elemento de la lista   
             
             return head;}

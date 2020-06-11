@@ -12,6 +12,7 @@ int cch=0;
 template<typename T>
 void heapify(vector<T> &arr, int n, int i)  //viene 1º ([1][4][8][5][3][2], 6, 2)   //([1][4][8][5][3][2], 6, 1)    //([1][5][8][4][3][2], 6, 3)    ////([1][5][8][4][3][2], 6, 0)
 {
+    // Crea el nodo raiz
     int largest = i; //     Largest=2               //Largest=1 //largest=3                             //largest=0
     int l = 2*i + 1; //     left = 2*i + 1 => l=5   //left=3    //l=7                                   //l=1
     int r = 2*i + 2; //     right = 2*i + 2 => r=6  //right=4   //r=8-> no va a entrar en ningun lado   //r=2

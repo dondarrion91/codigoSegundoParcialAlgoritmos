@@ -2,12 +2,15 @@
 #define BINOMIALHEAP_H_
 
 
-#define DEBUG false
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <ostream>
 #include <string>
+
+using namespace std;
+
+int ccHB=0;
 
 template <typename T>
 class NodoBinomial;
@@ -18,30 +21,17 @@ template <typename T>
 class BinomialHeap
 {
     public:
-        struct Exception
-	    {
-		    Exception(std::string msg ):msg(msg){}
-		    std::string what(){return msg;}
-		    std::string msg;
-	    };
             friend class NodoBinomial<T>;
 
             BinomialHeap();
-            BinomialHeap(const BinomialHeap& otro);
-            BinomialHeap(BinomialHeap&& otro);
-            BinomialHeap& operator=(const BinomialHeap& otro);
             ~BinomialHeap();
 
             void insertar(T valor);   //Crea un nodo heap con valor v y uniones con la cabeza
-            T getMin();     //Buca el nodo con el menor valor (entre los hnos) y lo retorna
             T extractMin(); //Borra el nodo con el menor valor 
-            void BorrarValor(T valor);  //Borra el nodo con el valor que le mande-> disminuye su valor hasta que sea menor al Min y ExtractMin
-            void disminuirValor(T valor, T valornuevo); //Busca el nodo con el valor que le di y lo cambia por valornuevo
-            int size(); 
             bool esVacia();
             void clear(); //Borra toda la lista
+            void getCompHB();
     protected:
-            NodoBinomial<T>* buscarValor(T v);   //Devuelve un puntero al nodo con valor v
             static NodoBinomial<T>* unionHeap(NodoBinomial<T>* A, NodoBinomial<T>* B);  //Une el Heap A con el Heap B: por lo que entiendo los une añadiendolos al final de lalista de hijos
             static NodoBinomial<T>* mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>* B);  //Masomenos lo mismo que el anterior-> no entiendo diferencia
             static int orden(NodoBinomial<T>* Heap);    //Numero de hijos de un nodo
@@ -60,9 +50,6 @@ class NodoBinomial
             ~NodoBinomial();
 
             void addHijo(NodoBinomial<T>* hijo);
-            NodoBinomial<T>* buscar(T v);
-            int size(int& i);
-            void addTo(BinomialHeap<T>* otro);  //añade los nodos de this a otro
     private:
             T valor;
             NodoBinomial<T> *hermano, *hijo, *padre;
@@ -74,10 +61,10 @@ class NodoBinomial
 template <typename T>
 NodoBinomial<T>::NodoBinomial(T v, NodoBinomial<T>* p)      //CONSTRUCTOR
 {
-    valor = v;
+    valor = v;	//evento
     padre = p;
     hermano = hijo = nullptr;
-    orden = 0;
+    orden = 0;	//cant de hijos
 }
 template <typename T>
 NodoBinomial<T>::~NodoBinomial()    //DESTRUCTOR
@@ -85,17 +72,6 @@ NodoBinomial<T>::~NodoBinomial()    //DESTRUCTOR
     delete hijo;
     delete hermano;
 }
-
-/*template <typename T>
-int NodoBinomial<T>::size(int &i)
-{
-    ++i;
-    if(hermano)
-        hermano->size(i);   //que sume i segun la cant de hnos
-    if(hijo)
-        hijo->size(i);  //que sume i segun la cant de hijos
-    return i;    //i = hnos + hijos
-}*/
 
 template <typename T>
 void NodoBinomial<T>::addHijo(NodoBinomial<T>* nodoHijo)    //le añade un hijo al padre this
@@ -151,9 +127,14 @@ bool BinomialHeap<T>::esVacia()
 template <typename T>
 void BinomialHeap<T>::insertar(T v)
 {
-    NodoBinomial<T> *p = cabeza? cabeza->padre: nullptr;    //mamadera entendelo vos
-    NodoBinomial<T> *unico = new NodoBinomial<T>(v, p);
-    cabeza = unionHeap(unico, cabeza); //CREO que hace [unico]->[resto lista], como un concat
+	NodoBinomial<T> *p;	//va a ser el padre
+	if(cabeza){	//si ya hay 1 elemento, ese va a ser el padre del actual
+		p = cabeza->padre; 		
+    }else{	//cuando es el 1º elemento, no hay padre
+		p = nullptr;
+		}
+    NodoBinomial<T> *Nuevo = new NodoBinomial<T>(v, p);	
+    cabeza = unionHeap(Nuevo, cabeza); //CREO que hace [unico]->[resto lista], como un concat
 }
 
 template <typename T>
@@ -172,6 +153,7 @@ T BinomialHeap<T>::extractMin() //recordar que encuentra el menor para sacarlo d
         {
             if(temp->valor.getTiempo() < min->valor.getTiempo())    //si hermano < min
             {
+				ccHB++;
                 min = temp; //ese valor lo guardo en min
                 minPrev = prev; // y el anterior lo pongo en minPrev
             }
@@ -203,7 +185,7 @@ T BinomialHeap<T>::extractMin() //recordar que encuentra el menor para sacarlo d
         cabeza = unionHeap(cabeza, next);   //une los hijos de min con los hnos de min
         temp = min = minPrev = next = nullptr; 
     } else{
-            throw BinomialHeap<T>::Exception("Heap vacio!");
+            cout <<"Heap vacio!"<<endl;
     }
     return ValorMin;    // Y ACA EXTRAJE SU VALOR
     
@@ -222,15 +204,15 @@ int BinomialHeap<T>::orden(NodoBinomial<T>* heap)
     while(hijo)
     {
         ++i;
-        hijo = hijo->hermano;
+        hijo = hijo->hermano;		//Recorre los hermanos
     }
     return i;   //devuelve la cantidad de hijos que tiene un Nodo
 }
 
 template <typename T>
-NodoBinomial<T>* BinomialHeap<T>::unionHeap(NodoBinomial<T>* A, NodoBinomial<T>* B)
+NodoBinomial<T>* BinomialHeap<T>::unionHeap(NodoBinomial<T>* A, NodoBinomial<T>* B)	//UNE 2 HERMANOS
 {
-    NodoBinomial<T>* heapUnido = mergeHeap(A, B);
+    NodoBinomial<T>* heapUnido = mergeHeap(A, B);	//A=Nuevo, B=cabeza
     if(heapUnido)
     {
         NodoBinomial<T> *cur = heapUnido, *prev = nullptr, *next = nullptr;
@@ -245,12 +227,14 @@ NodoBinomial<T>* BinomialHeap<T>::unionHeap(NodoBinomial<T>* A, NodoBinomial<T>*
                 //NEXT PASA A SER HIJO DE CUR
                 if(cur->valor.getTiempo() < next->valor.getTiempo())    //si cur es menor que su hermano
                 {
+					ccHB++;
                     cur->hermano = next->hermano;   //setea como hno su otro hno->explicado arriba
                     cur->addHijo(next); //y el que era su hermano pasa a ser su hijo
                     prev = cur; //setea el previo
                     cur = cur->hermano; //y corre el actual
                 }   //OSEA, al finalizar este if lo que hizo fue poner cur en el lugar de su hno y tener de hijo a su hno, todo muy santiagueño
                 else{
+					ccHB++;
                     //CUR PASA A SER HIJO DE NEXT
                     if(prev)
                         prev->hermano = next; //le dice a prev que se "saltee" a cur y apunte a next  
@@ -269,13 +253,13 @@ NodoBinomial<T>* BinomialHeap<T>::unionHeap(NodoBinomial<T>* A, NodoBinomial<T>*
             }
         }
     }
-    return heapUnido;
+    return heapUnido;	//Cuando ve 2 heap con el mismo orden, los une sobre el hermano de la derecha
 }
 
 template <typename T>
-NodoBinomial<T>* BinomialHeap<T>::mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>* B)
+NodoBinomial<T>* BinomialHeap<T>::mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>* B)	//MUEVE HERMANOS
 {
-    NodoBinomial<T>* M = nullptr;
+    NodoBinomial<T>* M = nullptr;	//A=NUEVO B=Heap viejo
     
     if(A || B){
         if(A && !B)    //si existe A pero no B
@@ -290,22 +274,23 @@ NodoBinomial<T>* BinomialHeap<T>::mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>*
         {    
             NodoBinomial<T>* temp = nullptr, *next = nullptr, *prev = nullptr, *cur = nullptr;
 
-            if(A->orden > B->orden)
+            if(A->orden > B->orden)	//si el nodo nuevo tiene mas hijos que la cabeza
             {
-                M = B;
+                M = B;		//M es la cabeza
                 next = A;
             }
-            else
+            else 	//si tiene menos hijos
             {
-                M = A;
+                M = A;	//M es el nuevo nodo
                 next = B;
             }
-            cur = M;
+            cur = M;	//M(cur) es el de menor orden	 next: el de mayor orden
 
             while(cur && next && cur != next)   //recorre M hasta que cur=next -> cuando llega a la otra lista
             {
                 if(cur->orden <= next->orden)   //si cant hijos 1º lista <= cant hijos 2º lista 
                 {
+                    ccHB++;
                     if(cur->hermano)    //si cur tiene hno  [cur][hno][]...[next][]..
                     {
                         temp = cur->hermano;    //[temp=hno]
@@ -320,6 +305,7 @@ NodoBinomial<T>* BinomialHeap<T>::mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>*
                     }
                 }
                 else{   //si 1º tiene mas hijos que 2º
+                    ccHB++;
                     if(prev)    
                         prev->hermano = next;   //[prev][next]
                    else   
@@ -332,8 +318,13 @@ NodoBinomial<T>* BinomialHeap<T>::mergeHeap(NodoBinomial<T>* A, NodoBinomial<T>*
             }//Vemos que puso nexthno en el lugar de next, y cur como su hno-> Ademas guardo next en prev
         }
     }
-    return M;   //LA VERDAD NO ENTENDI NI JOTA PERO ES PARA MANTENER LA CARACTERISTICA DE ORDEN DEL ARBOL
+    return M;   //Mantiene el heap con mas hijos a la derecha
 }
+template <typename T>
+void BinomialHeap<T>::getCompHB(){
+        cout<< "Comp: "<< ccHB;
+    }
+
 
 #endif
 

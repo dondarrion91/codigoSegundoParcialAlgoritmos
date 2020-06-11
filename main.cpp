@@ -13,6 +13,7 @@ using namespace std;
 
 #include "Lista.h"
 #include "Heap.h"
+#include "BinomialHeap.h"
 ofstream salida;
 // clase Evento
 class Evento{
@@ -119,7 +120,7 @@ public:
     };
 
     string getNombre(){
-        return this->nombreReloj;
+       return this->nombreReloj;
     };
 
     string getReloj(){
@@ -151,17 +152,9 @@ public:
         relojes = NULL;
         eventos = NULL;
         // agrega todos los relojes
-        for(int i=0;i<wordsRelojes.size();i++){
+        for(string::size_type i=0;i<wordsRelojes.size();i++){
             agregarReloj(wordsRelojes[i]);
         }
-
-
-
-        /* // Crea los primeros eventos
-         for(int i=0;i<100;i++){
-             eventos->push(&eventos,relojes->data.setEvento(relojes->data.getTiempo(),relojes->data.getNombre()));
-             relojes = relojes->next;
-         }*/
     };
 
 
@@ -186,15 +179,15 @@ public:
         return eventos->GetNth(eventos,i)->data;
     }
     int getprox50(int k){
-        //int fin;
-        for(int x=0;x<50;x++){
-            Evento proximoEvento = getProximoEvento(k);
-            time_t t = time(0) + proximoEvento.getTiempo();
-            tm* now = localtime(&t);
-            cout<< k << "   "
-                << now->tm_mday
-                << "-"
-                << now->tm_mon
+		//int fin;
+		for(int x=0;x<50;x++){
+		        Evento proximoEvento = getProximoEvento(k);
+				time_t t = time(0) + proximoEvento.getTiempo();
+				tm* now = localtime(&t);
+				cout<< k << "	"
+				<< now->tm_mday
+				<< "-"
+				<< now->tm_mon
                 << "-"
                 << now->tm_year+1900
                 << " "
@@ -210,44 +203,42 @@ public:
                 << endl;
 
             salida.open("Salida QS.txt",ios::app);
-            if(salida.fail()){
-                cout <<"No se pudo abrir el archivo"<<endl;
-                exit(1);
-            }
-            salida  << k << "   "
-                    << now->tm_mday
-                    << "-"
-                    << now->tm_mon
-                    << "-"
-                    << now->tm_year+1900
-                    << " "
-                    << now->tm_hour
-                    << ":"
-                    <<  now->tm_min
-                    << ":"
-                    << now->tm_sec
-                    << " "
-                    << proximoEvento.getNombreEvento()
-                    << " Evento "
-                    << proximoEvento.getNumeroEvento()
-                    << endl;
-            salida.close();
+                if(salida.fail()){
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida  << k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< proximoEvento.getNombreEvento()
+							<< " Evento "
+							<< proximoEvento.getNumeroEvento()
+							<< endl;
+                    salida.close();
 
             k++;
-        }
-        // cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0: ";cin >> fin;
-        //return fin
-        return k;
-    }
+		}
+return k;
+	}
 
     void run(){
-        salida.open("Salida QS.txt",ios::out);
-        if(salida.fail()){
-            cout <<"No se pudo abrir el archivo"<<endl;
-            exit(1);
-        }
-        salida<<"";
-        salida.close();
+		    salida.open("Salida QS.txt",ios::out);
+               if(salida.fail()){
+                       cout <<"No se pudo abrir el archivo"<<endl;
+                       exit(1);
+                   }
+               salida<<"";
+               salida.close();
 
 
         for(int i=0;i<relojes->size(relojes);i++){
@@ -256,7 +247,6 @@ public:
             srand (time(NULL));
             for(int j=0;j<20;j++){
 
-                int random = rand();
                 if(relojActual.getReloj() == "periodico"){
                     relojActual.setEvento(u,relojActual.getNombre());
                 }else if(relojActual.getReloj() == "aleatorio"){
@@ -275,92 +265,64 @@ public:
         int fin = 1,k=0;
 
         // ordena los eventos
-        eventos->quickSort(&eventos);   //le mando [1][4][8][5][3][2] //devuelve [1][2][3][4][5][8]
+        eventos->quickSort(&eventos);	
 
         while(fin == 1){
-            while (k<500){
-                Evento proximoEvento = getProximoEvento(k);
-                time_t t = time(0) + proximoEvento.getTiempo();
-                tm* now = localtime(&t);
-                cout << k << "  "
-                     << now->tm_mday
-                     << "-"
-                     << now->tm_mon
-                     << "-"
-                     << now->tm_year+1900
-                     << " "
-                     << now->tm_hour
-                     << ":"
-                     <<  now->tm_min
-                     << ":"
-                     << now->tm_sec
-                     << " "
-                     << proximoEvento.getNombreEvento()
-                     << " Evento "
-                     << proximoEvento.getNumeroEvento()
-                     << endl;
+			while (k<500){
+            Evento proximoEvento = getProximoEvento(k);
+            time_t t = time(0) + proximoEvento.getTiempo();
+            tm* now = localtime(&t);
+            cout << k << "	"
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << proximoEvento.getNombreEvento()
+                << " Evento "
+                << proximoEvento.getNumeroEvento()
+                << endl;
 
 
-                salida.open("Salida QS.txt",ios::app);
+            salida.open("Salida QS.txt",ios::app);
                 if(salida.fail()){
-                    cout <<"No se pudo abrir el archivo"<<endl;
-                    exit(1);
-                }
-                salida  << k << "   "
-                        << now->tm_mday
-                        << "-"
-                        << now->tm_mon
-                        << "-"
-                        << now->tm_year+1900
-                        << " "
-                        << now->tm_hour
-                        << ":"
-                        <<  now->tm_min
-                        << ":"
-                        << now->tm_sec
-                        << " "
-                        << proximoEvento.getNombreEvento()
-                        << " Evento "
-                        << proximoEvento.getNumeroEvento()
-                        << endl;
-                salida.close();
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida	<< k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< proximoEvento.getNombreEvento()
+							<< " Evento "
+							<< proximoEvento.getNumeroEvento()
+							<< endl;
+                    salida.close();
 
 
-                k++;
+            k++;
             }
 
             // si se ejecutan 500 eventos pregunta al usuario si quiere agregar 50 eventos
             cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0: ";cin >> fin;
-            if(fin==1){
-                k=getprox50(k);}
-
-
-            /*if(fin == 1){
-                for(int i=0;i<50;i++){
-                    Reloj relojActual = relojes->GetNth(relojes,i)->data;
-                    int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
-                    srand (time(NULL));
-                    for(int j=0;j<1;j++){
-
-                        int random = rand();
-                        if(relojActual.getReloj() == "periodico"){
-                            relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
-                        }else if(relojActual.getReloj() == "aleatorio"){
-                            relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
-                        }
-
-                        u+=relojActual.getTiempo();
-                        v+=1+rand()%relojActual.getTiempo();
-
-                        eventos->push(&eventos,relojActual.getEvento());
-
-                    }
-                }
-
-                // vuelve a ordenar los eventos
-                eventos->quickSort(&eventos);
-            }*/
-
+                if(fin==1){
+			k=getprox50(k);}                         
         }
         eventos->getComp();
 
@@ -375,7 +337,7 @@ private:
     vector<Reloj> relojes;
 public:
     PlanificadorConHeap(vector<vector<string>> wordsRelojes){
-        for(int i=0;i< wordsRelojes.size();i++){
+        for(string::size_type i=0;i< wordsRelojes.size();i++){
             agregarReloj(wordsRelojes[i]);
         }
     };
@@ -393,14 +355,14 @@ public:
         relojes.push_back(reloj);
     }
     int getprox50(int k){
-        //int fin;
-        for(int x=0;x<50;x++){
-            time_t t = time(0) + eventos[k].getTiempo();
-            tm* now = localtime(&t);
-            cout<< k << "   "
-                << now->tm_mday
-                << "-"
-                << now->tm_mon
+		//int fin;
+		for(int x=0;x<50;x++){
+				time_t t = time(0) + eventos[k].getTiempo();
+				tm* now = localtime(&t);
+				cout<< k << "	"
+				<< now->tm_mday
+				<< "-"
+				<< now->tm_mon
                 << "-"
                 << now->tm_year+1900
                 << " "
@@ -416,46 +378,44 @@ public:
                 << endl;
 
             salida.open("Salida Heap.txt",ios::app);
-            if(salida.fail()){
-                cout <<"No se pudo abrir el archivo"<<endl;
-                exit(1);
-            }
-            salida  << k << "   "
-                    << now->tm_mday
-                    << "-"
-                    << now->tm_mon
-                    << "-"
-                    << now->tm_year+1900
-                    << " "
-                    << now->tm_hour
-                    << ":"
-                    <<  now->tm_min
-                    << ":"
-                    << now->tm_sec
-                    << " "
-                    << eventos[k].getNombreEvento()
-                    << " Evento "
-                    << eventos[k].getNumeroEvento()
-                    << endl;
-            salida.close();
+                if(salida.fail()){
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida  << k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< eventos[k].getNombreEvento()
+							<< " Evento "
+							<< eventos[k].getNumeroEvento()
+							<< endl;
+                    salida.close();
 
             k++;
-        }
-        // cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0: ";cin >> fin;
-        //return fin
-        return k;
-    }
+		}
+return k;
+	}
 
     void run(){
-        salida.open("Salida Heap.txt",ios::out);
-        if(salida.fail()){
-            cout <<"No se pudo abrir el archivo"<<endl;
-            exit(1);
-        }
-        salida<<"";
-        salida.close();
+		    salida.open("Salida Heap.txt",ios::out);
+               if(salida.fail()){
+                       cout <<"No se pudo abrir el archivo"<<endl;
+                       exit(1);
+                   }
+               salida<<"";
+               salida.close();
 
-        for(int i=0;i<relojes.size();i++) {
+        for(string::size_type i=0;i<relojes.size();i++) {
             int u = relojes[i].getTiempo(),
                     v = 1 + rand() % relojes[i].getTiempo();
             for (int j = 0; j < 20; j++) {
@@ -473,112 +433,292 @@ public:
 
 
         }
-
+		
         int n = eventos.size();
-        heapSort(eventos, n);   // mando ([1][4][8][5][3][2], 6)
+        heapSort(eventos, n);	
 
         int fin = 1,k=0;
         while(fin == 1){
-            while (k<500){
-                time_t t = time(0) + eventos[k].getTiempo();
-                tm* now = localtime(&t);
-                cout << k << "  "
-                     << now->tm_mday
-                     << "-"
-                     << now->tm_mon
-                     << "-"
-                     << now->tm_year+1900
-                     << " "
-                     << now->tm_hour
-                     << ":"
-                     <<  now->tm_min
-                     << ":"
-                     << now->tm_sec
-                     << " "
-                     << eventos[k].getNombreEvento()
-                     << " Evento "
-                     << eventos[k].getNumeroEvento()
-                     << endl;
+			while (k<500){
+            time_t t = time(0) + eventos[k].getTiempo();
+            tm* now = localtime(&t);
+            cout << k << "	"
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << eventos[k].getNombreEvento()
+                << " Evento "
+                << eventos[k].getNumeroEvento()
+                << endl;
 
 
-                salida.open("Salida Heap.txt",ios::app);
+            salida.open("Salida Heap.txt",ios::app);
                 if(salida.fail()){
-                    cout <<"No se pudo abrir el archivo"<<endl;
-                    exit(1);
-                }
-                salida  << k << "   "
-                        << now->tm_mday
-                        << "-"
-                        << now->tm_mon
-                        << "-"
-                        << now->tm_year+1900
-                        << " "
-                        << now->tm_hour
-                        << ":"
-                        <<  now->tm_min
-                        << ":"
-                        << now->tm_sec
-                        << " "
-                        << eventos[k].getNombreEvento()
-                        << " Evento "
-                        << eventos[k].getNumeroEvento()
-                        << endl;
-                salida.close();
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida	<< k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< eventos[k].getNombreEvento()
+							<< " Evento "
+							<< eventos[k].getNumeroEvento()
+							<< endl;
+                    salida.close();
 
 
-                k++;
+            k++;
             }
 
             // si se ejecutan 500 eventos pregunta al usuario si quiere agregar 50 eventos
             cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0: ";cin >> fin;
-            if(fin==1){
-                k=getprox50(k);}
-
-        }
-        getComp();
-    }
+                if(fin==1){
+			k=getprox50(k);}
+			
+       }
+       getComp();
+}
 };
 
-int main() {
-    string cadena;
+class PlanificadorConHB{
+private:
+    struct Lista<Reloj> *relojes;
+    vector<Evento> eventosV;
 
-    /*int aleatorio;
-    string tipo;
-    ofstream fs("nombre.txt");
+   	BinomialHeap<Evento> heap;
 
-    for(int i=0;i<100;i++){
-        aleatorio = rand() % 100;
-        if(aleatorio % 2 == 0){
-            tipo = "aleatorio";
-        }else{
-            tipo = "periodico";
+public:
+    PlanificadorConHB(vector<vector<string>> wordsRelojes){
+        relojes = NULL;
+        // agrega todos los relojes
+        for(string::size_type i=0;i<wordsRelojes.size();i++){
+            agregarReloj(wordsRelojes[i]);
+        }
+    };
+
+
+    // metodos
+
+    void agregarReloj(vector<string> words){
+        // Crea un reloj
+        Reloj reloj = Reloj();
+        reloj.setNumero(stoi(words[0]));
+        reloj.setNombre(words[1]);
+        reloj.setReloj(words[2]);
+        reloj.setTiempoRepe(stoi(words[3]));
+
+
+        //Agrega el Reloj a la lista
+        relojes->push(&relojes,reloj);
+
+
+    }
+
+    int getprox50(int k){
+		for(int x=0;x<50;x++){
+				time_t t = time(0) + eventosV[k].getTiempo();
+				tm* now = localtime(&t);
+				cout<< k << "	"
+				<< now->tm_mday
+				<< "-"
+				<< now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << eventosV[k].getNombreEvento()
+                << " Evento "
+                << eventosV[k].getNumeroEvento()
+                << endl;
+
+            salida.open("Salida QS.txt",ios::app);
+                if(salida.fail()){
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida  << k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< eventosV[k].getNombreEvento()
+							<< " Evento "
+							<< eventosV[k].getNumeroEvento()
+							<< endl;
+                    salida.close();
+
+            k++;
+		}
+return k;
+	}
+
+    void run(){
+		    salida.open("Salida HB.txt",ios::out);
+               if(salida.fail()){
+                       cout <<"No se pudo abrir el archivo"<<endl;
+                       exit(1);
+                   }
+               salida<<"";
+               salida.close();
+
+
+        for(int i=0;i<relojes->size(relojes);i++){
+            Reloj relojActual = relojes->GetNth(relojes,i)->data;
+            int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
+            srand (time(NULL));
+            for(int j=0;j<20;j++){
+
+                if(relojActual.getReloj() == "periodico"){
+                    relojActual.setEvento(u,relojActual.getNombre());
+                }else if(relojActual.getReloj() == "aleatorio"){
+                    relojActual.setEvento(v,relojActual.getNombre());
+                }
+
+                u += relojActual.getTiempo();
+                v += 1+rand()%relojActual.getTiempo();
+
+                heap.insertar(relojActual.getEvento());
+
+
+            }
         }
 
-        fs << to_string(i+1) + " Reloj_" + to_string(i+1) + " " + tipo + " " + to_string(aleatorio) << endl;
-    }*/
+        int fin = 1,k=0;
 
-    ifstream fe("leer.txt");
+        // ordena los eventos
+        while(!heap.esVacia()){
+        eventosV.push_back(heap.extractMin());
+        }
+
+
+        while(fin == 1){
+			while (k<500){
+            time_t t = time(0) + eventosV[k].getTiempo();
+            tm* now = localtime(&t);
+            cout << k << "	"
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << eventosV[k].getNombreEvento()
+                << " Evento "
+                << eventosV[k].getNumeroEvento()
+                << endl;
+
+
+            salida.open("Salida HB.txt",ios::app);
+                if(salida.fail()){
+                        cout <<"No se pudo abrir el archivo"<<endl;
+                        exit(1);
+                    }
+                    salida	<< k << "	"
+							<< now->tm_mday
+							<< "-"
+							<< now->tm_mon
+							<< "-"
+							<< now->tm_year+1900
+							<< " "
+							<< now->tm_hour
+							<< ":"
+							<<  now->tm_min
+							<< ":"
+							<< now->tm_sec
+							<< " "
+							<< eventosV[k].getNombreEvento()
+							<< " Evento "
+							<< eventosV[k].getNumeroEvento()
+							<< endl;
+                    salida.close();
+
+
+            k++;
+            }
+
+            // si se ejecutan 500 eventos pregunta al usuario si quiere agregar 50 eventos
+            cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0: ";cin >> fin;
+                if(fin==1){
+			k=getprox50(k);}
+
+                
+        }
+        heap.getCompHB();
+
+
+    }
+
+};
+
+
+
+int main() {
+	
+    string cadena;
+               
+
+    ifstream fe("nombre.txt");
     int contador=0;
     vector<string> words; // vector con cada parametro del reloj
     vector<vector<string>> wordsRelojes;  // vector de vectores con el contenido de words
 
     while (!fe.eof()) {
-        contador ++;
-        fe >> cadena;
+            contador ++;
+            fe >> cadena;
 
-        words.push_back(cadena);
+            words.push_back(cadena);
 
-        if(contador == 4){
-            wordsRelojes.push_back(words);
-            contador = 0;
-            words.clear();
-        }
+            if(contador == 4){
+                wordsRelojes.push_back(words);
+                contador = 0;
+                words.clear();
+            }
     }
 
     char opcion;
     cout << "Elije tu algoritmo de ordenamiento: " << endl;
     cout << "Presiona 1 para Quicksort: " << endl;
     cout << "Presiona 2 para Heapsort: " << endl;
+        cout << "Presiona 3 para HB: " << endl;
+
     cout << "Presiona cualquier otra tecla para salir: ";cin >> opcion;
 
     if(opcion == '1'){
@@ -590,10 +730,11 @@ int main() {
         PlanificadorConHeap planificadorConHeap = PlanificadorConHeap(wordsRelojes);
         planificadorConHeap.run();
 
-    }
-
-
+    }else if(opcion == '3'){
+        PlanificadorConHB planificadorHB = PlanificadorConHB(wordsRelojes);
+        planificadorHB.run();				
+	}
 
     fe.close();
-
+    return 0;
 }

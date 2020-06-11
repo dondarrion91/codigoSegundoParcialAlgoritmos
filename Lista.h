@@ -34,47 +34,15 @@ struct Lista
         (*head_ref) = new_node;
     } 
 
-    // imprimir lista
-    void printList(struct Lista *node)
-    {
-        while (node != NULL)
-        {
-
-            time_t t = time(0) + node->data.getTiempo();
-            tm* now = localtime(&t);
-            cout
-                    << now->tm_mday
-                    << "-"
-                    << now->tm_mon
-                    << "-"
-                    << now->tm_year+1900
-                    << " "
-                    << now->tm_hour
-                    << ":"
-                    <<  now->tm_min
-                    << ":"
-                    << now->tm_sec
-                    << " "
-                    << node->data.getNombreEvento()
-                    << " Evento "
-                    << node->data.getNumeroEvento()
-                    << endl;
-
-            node = node->next;
-        }
-        printf("\n");
-    }
-
     // retorna la cola de la lista
-    struct Lista *getTail(struct Lista *cur)        //viene la lista [1][4][8][5][3][2] donde cur=[1]
+    struct Lista *getTail(struct Lista *cur)        
     {
-        while (cur != NULL && cur->next != NULL)    //hasta el ultimo: [2], recorre la lista
+        while (cur != NULL && cur->next != NULL)    
             cur = cur->next;        
-        return cur;     //devuelve el ultimo [2] 
+        return cur;     //devuelve el ultimo nodo 
     }
           
-    // retorna la cola de la lista
-    int size(Lista<T> *head){
+        int size(Lista<T> *head){
         int contador = 0;
         Lista<T>* cur = head;
         while (cur != NULL){
@@ -101,89 +69,89 @@ struct Lista
     }
 
     // retorna el elemento pivote
-    struct Lista *partition(struct Lista *head, struct Lista *end,          //vienen: ([1], [2], NULL, NULL)
+    struct Lista *partition(struct Lista *head, struct Lista *end,          // 3º: Lo que hace es ubicar el pivot en su lugar definitivo, con los mayores que el a su derecha y los menores a su izq
                            struct Lista **newHead, struct Lista **newEnd)
     {
-        struct Lista *pivot = end;  //pivot=[2]
-        struct Lista *prev = NULL, *cur = head, *tail = pivot;  //prev=NULL, cur=[1], tail=[2]
+        struct Lista *pivot = end;  
+        struct Lista *prev = NULL, *cur = head, *tail = pivot;  
 
-        while (cur != pivot)    //[1]!=[2] ->entra al while //[4]!=[2]-> entra al while, en else
+        while (cur != pivot)    //mientras el nodo actual no sea el pivot
         {
-            if (cur->data.getTiempo() < pivot->data.getTiempo())        //si [1]<[2]->entra al if con ->[1][4][8][5][3][2]       prev=NULL, cur=[1], pivot=[2], tail=[2]
+            if (cur->data.getTiempo() < pivot->data.getTiempo())        //si el tiempo del actual es menor al tiempo del pivot
             {
 				cc++;
                 if ((*newHead) == NULL)
-                    (*newHead) = cur;       //newHead=[1]
+                    (*newHead) = cur;       
 
-                prev = cur;     //prev=[1]
-                cur = cur->next;    //cur=[4]
+                prev = cur;     
+                cur = cur->next;    //recorre la lista un lugar
             }
-            else // If cur node is greater than pivot-> aca no entra, es la 2º pasada   [1]->[4][8][5][3][2]      prev=[1], cur=[4], pivot[2], tail=[2]
+            else // Si el nodo actual es mas grande que el pivot
             {
                 cc++;
-                // Move cur node to next of tail, and change tail
+                // Mueve el nodo actual al siguiente a la cola, y cambia la cola
                 if (prev){
                     
-                    prev->next = cur->next; }   // [1]->[8]
-                struct Lista *tmp = cur->next;  //tmp=[8]
-                cur->next = NULL;       //[4]->NULL
-                tail->next = cur;       //[2]->[4]
-                tail = cur;     //tail=[4]
-                cur = tmp;      //cur=[8] -> la lista queda [1]->[8][5][3][2][4]
+                    prev->next = cur->next; }   
+                struct Lista *tmp = cur->next;  
+                cur->next = NULL;       
+                tail->next = cur;       
+                tail = cur;     
+                cur = tmp;      
             }
             
-        }   //al finalizar el while tenemos: [1][2][4][8][5][3]
+        } //al terminar el while tenemos: [menores al pivot]->[pivot]->[mayores al pivot]    
         //LUEGO DE CADA PASADA DE LA LISTA
         // Si el pivot es el menor elemento en la Lista,
         // pivot es la cabeza
-        if ((*newHead) == NULL)     //no entra pues newHead=[1]
+        if ((*newHead) == NULL)     
             (*newHead) = pivot;     
 
         // newEnd pasa a ser el ultimo nodo
-        (*newEnd) = tail;       //  newEnd=[3]
+        (*newEnd) = tail;       
 
-        return pivot;   // return [2]
+        return pivot;   // Devuelve el pivot ubicado en su lugar definitivo
     }
 
     // metodo recursivo de ordenamiento Quicksort
-    struct Lista *quickSortRecur(struct Lista *head, struct Lista *end) //aca viene el puntero a la cabeza: [1], y el puntero al ultimo: [2]
+    struct Lista *quickSortRecur(struct Lista *head, struct Lista *end) // 2º: aca viene el puntero a la cabeza, y el puntero al ultimo
     {
         // base condition
-        if (!head || head == end){       //esto devuelve la cabeza si es el unico elemento de la lista   //cuando viene el ([1], [1]) devuelve [1]
+        if (!head || head == end){       //esto devuelve la cabeza si es el unico elemento de la lista   
             
             return head;}
         
         Lista *newHead = NULL, *newEnd = NULL;
 
-        struct Lista *pivot = partition(head, end, &newHead, &newEnd); //mando a partition ([1], [2], NULL, NULL)-> me devuelve [2] y cambia los valores de: newHead=[1] y newEnd=[3]
+        struct Lista *pivot = partition(head, end, &newHead, &newEnd); // Devuelve el pivot ubicado en su lugar definitivo
 
-        // Si el pivot es el menor elemento - no hace falta llamar la recursiva a 
+        // 4º: Si el pivot es el menor elemento - no hace falta llamar la recursiva a 
         // la parte izquierda.
-        if (newHead != pivot) //si pivot no es el menor: [1]!=[2] Entra al if   //Recordemos la lista desp de partition:[1][2][4][8][5][3]
+        if (newHead != pivot) //si pivot no es el menor
         {
-            struct Lista *tmp = newHead;       //tmp=[1]
-            while (tmp->next != pivot)  //El siguiente al tmp es el pivot? en este caso si->no entra al while
+            struct Lista *tmp = newHead;       
+            while (tmp->next != pivot)  //Esto lo hace para despues ordenar la lista de menores: El siguiente al tmp es el pivot?
                 tmp = tmp->next;
-            tmp->next = NULL;   //[1]->NULL     %?->[2][4][8][5][3]
+            tmp->next = NULL;   //el ultimo elemento de la lista de menores lo hace apuntar a NULL
 
             // Llamada Recursiva para la lista antes del pivot
-            newHead = quickSortRecur(newHead, tmp); //aca mando ([1], [1]) y me vuelve [1] => newHead=[1]
+            newHead = quickSortRecur(newHead, tmp); //ACA manda la lista de menores y la recupera ordenada
 
-            tmp = getTail(newHead); //mando a getTail con [1] y me devuelve [1]
-            tmp->next = pivot;  //[1]->[2][4][8][5][3]
+            tmp = getTail(newHead); //uso un temporal para la cola de la lista ordenada de menores
+            tmp->next = pivot;  //y a la cola le setea el next al pivot
             //Estos 2 pasos son para concatenar la lista menor al pivot con el pivot
         }
 
-        // Llamada Recursiva para la lista despues del pivot
-        pivot->next = quickSortRecur(pivot->next, newEnd);  //mando ([4], [3]) y me va a devolver el [3] como pivot y newHead, y el [5] como newEnd
+        // Llamada Recursiva para la lista de mayores al pivot
+        pivot->next = quickSortRecur(pivot->next, newEnd);  
 
-        return newHead; //Al fin de esto me devuelve [1][2][3][4][5][8] bien ordenado
+        return newHead; //Al fin de esto me devuelve la lista bien ordenada
     }
 
     // metodo envoltorio del metodo recursivo
-    void quickSort(struct Lista **headRef)      //aca viene la lista de eventos [1][4][8][5][3][2]
+    void quickSort(struct Lista **headRef)      //  1º: aca viene la lista de eventos desordenada
     {
-        (*headRef) = quickSortRecur(*headRef, getTail(*headRef));   //va a devolver la cabeza de la lista ordenada / parametros: (lista eventos, ultimo valor)
+        (*headRef) = quickSortRecur(*headRef, getTail(*headRef));   //va a devolver la cabeza de la lista ordenada 
         return;
     }
     void getComp(){

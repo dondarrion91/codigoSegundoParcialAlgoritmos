@@ -12,9 +12,9 @@ int cch=0;
 template<typename T>
 void heapify(vector<T> &arr, int n, int i)
 {
-    int largest = i; //el mas grande va a ser i
-    int l = 2*i + 1; //izquierdo
-    int r = 2*i + 2; //derecho
+    int largest = i; //el mas grande va a ser i //padre
+    int l = 2*i + 1; //hijo izquierdo
+    int r = 2*i + 2; //hijo derecho
 
     // Si el hijo izquierdo es mas grande que la raiz
     if (l < n && arr[l].getTiempo() > arr[largest].getTiempo())     //si el tiempo l es mas grande que el de largest
@@ -26,43 +26,35 @@ void heapify(vector<T> &arr, int n, int i)
        { largest = r;
         }
     // Si el mas grande no es i
-    if (largest != i)
+    if (largest != i)   //Si alguno de los hijos es mas grande que el padre
     {
-        swap(arr[i], arr[largest]); //cambia de lugar
+        swap(arr[i], arr[largest]); //cambia de lugar: pone el mas grande como padre
 
         // recursividad
-        heapify(arr, n, largest);
+        heapify(arr, n, largest);   //llama la recursiva para ordenar el nuevo triangulo luego de la rotacion
     }
-    cch=cch+3;
+    cch=cch+3;  //las comparaciones fuera de los if pq hay casos en los que no entra a ninguno pero compara igual
 }
 
 // main usa este
 template<typename T>
-void heapSort(vector<T> &arr, int n)
+void heapSort(vector<T> &arr, int n)    // 1º: desde el main llamamos esta funcion con el vector desordenado y su tamaño
 {
     // construye heap
     for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
+        heapify(arr, n, i); //ordena el triangulo entre el padre (i) y sus hijos realizando las rotaciones correspondientes
 
 	//extrae de uno a uno los elementos del heap
     for (int i=n-1; i>0; i--)   //desde el ultimo elemento al primero
     {
         // Mueve el actual al final
-        swap(arr[0], arr[i]);
+        swap(arr[0], arr[i]);   //pone el mayor elemento al final->su lugar definitivo
 
-        // aplicla heap al reducido
+        // reordena el arbol, sin contar los ultimos que ya estan en su lugar
         heapify(arr, i, 0);
     }
 }
 
-//imprime
-template<typename T>
-void printArray(vector<T> &arr, int n)
-{
-    for (int i=0; i<n; ++i)
-        cout << arr[i].getTiempo() << " ";
-    cout << "\n";
-}
 void getComp(){
         cout<< "Comp: "<< cch; //comparaciones
     }

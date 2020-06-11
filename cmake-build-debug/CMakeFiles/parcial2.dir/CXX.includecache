@@ -6,42 +6,11 @@
 
 #IncludeRegexTransform: 
 
-<<<<<<< HEAD
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/BinomialHeap.h
-=======
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
-iostream
--
-vector
--
-
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
+/home/julian/CLionProjects/segundoparcial/BinomialHeap.h
 iostream
 -
 fstream
 -
-stdlib.h
--
-sstream
--
-cstdlib
--
-string
--
-vector
--
-chrono
--
-ctime
--
-
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp
->>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
-iostream
--
-fstream
--
-<<<<<<< HEAD
 iomanip
 -
 ostream
@@ -49,36 +18,13 @@ ostream
 string
 -
 
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
+/home/julian/CLionProjects/segundoparcial/Heap.h
 iostream
 -
 vector
 -
 
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
-iostream
--
-fstream
--
-=======
->>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
-stdlib.h
--
-sstream
--
-cstdlib
--
-string
--
-vector
--
-chrono
--
-ctime
--
-<<<<<<< HEAD
-
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp
+/home/julian/CLionProjects/segundoparcial/Lista.h
 iostream
 -
 fstream
@@ -97,15 +43,30 @@ chrono
 -
 ctime
 -
-=======
->>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
+
+/home/julian/CLionProjects/segundoparcial/main.cpp
+iostream
+-
+fstream
+-
+stdlib.h
+-
+sstream
+-
+cstdlib
+-
+string
+-
+vector
+-
+chrono
+-
+ctime
+-
 Lista.h
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
+/home/julian/CLionProjects/segundoparcial/Lista.h
 Heap.h
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
-<<<<<<< HEAD
+/home/julian/CLionProjects/segundoparcial/Heap.h
 BinomialHeap.h
-/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/BinomialHeap.h
-=======
->>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
+/home/julian/CLionProjects/segundoparcial/BinomialHeap.h
 

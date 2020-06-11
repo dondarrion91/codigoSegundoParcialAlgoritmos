@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="parcial2" targetName="parcial2" />
@@ -29,7 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b01fcb63-750d-40e3-b39b-f5dca0a4fcb2" name="Default Changelist" comment="" />
+    <list default="true" id="27cab6d7-69ab-4fe9-9566-3e85d2ed3582" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,36 +20,16 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectId" id="1cQNuXs1BT7scm9HoMpsVUMhOgL" />
+  <component name="ProjectId" id="1d9bmszLbqnXig3IHjWm2se9FFW" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="parcial2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="parcial2" TARGET_NAME="parcial2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="parcial2" RUN_TARGET_NAME="parcial2">
@@ -81,18 +43,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b01fcb63-750d-40e3-b39b-f5dca0a4fcb2" name="Default Changelist" comment="" />
-      <created>1590457079463</created>
+      <changelist id="27cab6d7-69ab-4fe9-9566-3e85d2ed3582" name="Default Changelist" comment="" />
+      <created>1591840417064</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1590457079463</updated>
-      <workItem from="1590457081873" duration="5449000" />
-      <workItem from="1590517670223" duration="9138000" />
-      <workItem from="1590545449440" duration="1320000" />
-      <workItem from="1590587451461" duration="23332000" />
-      <workItem from="1590673178288" duration="15969000" />
-      <workItem from="1591193368017" duration="23043000" />
-      <workItem from="1591484057809" duration="494000" />
+      <updated>1591840417064</updated>
+      <workItem from="1591840419234" duration="3797000" />
     </task>
     <servers />
   </component>
@@ -100,65 +56,24 @@
     <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1316" height="114" key="GridCell.Tab.0.bottom" timestamp="1591839990931">
+    <state width="1316" height="124" key="GridCell.Tab.0.bottom" timestamp="1591887705464">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="114" key="GridCell.Tab.0.bottom/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990931" />
-    <state width="1316" height="114" key="GridCell.Tab.0.center" timestamp="1591839990930">
+    <state width="1316" height="124" key="GridCell.Tab.0.bottom/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591887705464" />
+    <state width="1316" height="124" key="GridCell.Tab.0.center" timestamp="1591887705464">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="114" key="GridCell.Tab.0.center/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990930" />
-    <state width="1316" height="114" key="GridCell.Tab.0.left" timestamp="1591839990930">
+    <state width="1316" height="124" key="GridCell.Tab.0.center/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591887705464" />
+    <state width="1316" height="124" key="GridCell.Tab.0.left" timestamp="1591887705463">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="114" key="GridCell.Tab.0.left/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990930" />
-    <state width="1316" height="114" key="GridCell.Tab.0.right" timestamp="1591839990930">
+    <state width="1316" height="124" key="GridCell.Tab.0.left/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591887705463" />
+    <state width="1316" height="124" key="GridCell.Tab.0.right" timestamp="1591887705464">
       <screen x="0" y="0" width="1366" height="737" />
     </state>
-    <state width="1316" height="114" key="GridCell.Tab.0.right/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990930" />
-    <state width="1316" height="114" key="GridCell.Tab.1.bottom" timestamp="1591839990931">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state width="1316" height="114" key="GridCell.Tab.1.bottom/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990931" />
-    <state width="1316" height="114" key="GridCell.Tab.1.center" timestamp="1591839990931">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state width="1316" height="114" key="GridCell.Tab.1.center/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990931" />
-    <state width="1316" height="114" key="GridCell.Tab.1.left" timestamp="1591839990931">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state width="1316" height="114" key="GridCell.Tab.1.left/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990931" />
-    <state width="1316" height="114" key="GridCell.Tab.1.right" timestamp="1591839990931">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state width="1316" height="114" key="GridCell.Tab.1.right/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591839990931" />
-    <state x="338" y="197" key="com.intellij.ide.util.TipDialog" timestamp="1590673348358">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state x="338" y="197" key="com.intellij.ide.util.TipDialog/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1590673348358" />
-    <state x="365" y="9" width="630" height="718" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1591128166642">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state x="365" y="9" width="630" height="718" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591128166642" />
-    <state x="348" y="161" key="run.anything.popup" timestamp="1591128818166">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state x="348" y="161" key="run.anything.popup/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591128818166" />
-    <state x="349" y="58" width="672" height="678" key="search.everywhere.popup" timestamp="1590612875973">
-      <screen x="0" y="0" width="1366" height="737" />
-    </state>
-    <state x="349" y="58" width="672" height="678" key="search.everywhere.popup/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1590612875973" />
+    <state width="1316" height="124" key="GridCell.Tab.0.right/0.0.1366.737/1366.0.1366.768@0.0.1366.737" timestamp="1591887705464" />
   </component>
 </project>

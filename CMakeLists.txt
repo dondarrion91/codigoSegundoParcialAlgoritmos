@@ -3,4 +3,4 @@ project(parcial2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(parcial2 main.cpp)
+add_executable(parcial2 main.cpp Lista.h Heap.h)

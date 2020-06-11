@@ -13,8 +13,12 @@ using namespace std;
 
 #include "Lista.h"
 #include "Heap.h"
+<<<<<<< HEAD
 #include "BinomialHeap.h"
 ofstream salida;
+=======
+
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 // clase Evento
 class Evento{
 private:
@@ -136,6 +140,40 @@ public:
         return this->evento;
     }
 
+<<<<<<< HEAD
+};
+
+
+
+
+
+// Planificador con lista y QuickSort
+class PlanificadorConLista{
+private:
+    struct Lista<Reloj> *relojes;
+    struct Lista<Evento> *eventos;
+public:
+    PlanificadorConLista(vector<vector<string>> wordsRelojes){
+        relojes = NULL;
+        eventos = NULL;
+        // agrega todos los relojes
+        for(int i=0;i<wordsRelojes.size();i++){
+            agregarReloj(wordsRelojes[i]);
+        }
+
+
+
+       /* // Crea los primeros eventos
+        for(int i=0;i<100;i++){
+            eventos->push(&eventos,relojes->data.setEvento(relojes->data.getTiempo(),relojes->data.getNombre()));
+            relojes = relojes->next;
+        }*/
+    };
+
+
+    // metodos
+
+=======
 };
 
 
@@ -177,6 +215,127 @@ public:
         reloj.setTiempoRepe(stoi(words[3]));
 
 
+        //Agrega el Reloj a la lista
+        relojes->push(&relojes,reloj);
+
+
+    }
+
+    Evento getProximoEvento(int i){
+        return eventos->GetNth(eventos,i)->data;
+    }
+
+    void run(){
+
+        for(int i=0;i<relojes->size(relojes);i++){
+            Reloj relojActual = relojes->GetNth(relojes,i)->data;
+            int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
+            srand (time(NULL));
+            for(int j=0;j<20;j++){
+
+                int random = rand();
+                if(relojActual.getReloj() == "periodico"){
+                    relojActual.setEvento(u,relojActual.getNombre());
+                }else if(relojActual.getReloj() == "aleatorio"){
+                    relojActual.setEvento(v,relojActual.getNombre());
+                }
+
+                u += relojActual.getTiempo();
+                v += 1+rand()%relojActual.getTiempo();
+
+                eventos->push(&eventos,relojActual.getEvento());
+
+
+            }
+        }
+
+        int fin = 1,k=0;
+
+        // ordena los eventos
+        eventos->quickSort(&eventos);
+
+        while(fin == 1){
+            Evento proximoEvento = getProximoEvento(k);
+            time_t t = time(0) + proximoEvento.getTiempo();
+            tm* now = localtime(&t);
+            cout
+                << now->tm_mday
+                << "-"
+                << now->tm_mon
+                << "-"
+                << now->tm_year+1900
+                << " "
+                << now->tm_hour
+                << ":"
+                <<  now->tm_min
+                << ":"
+                << now->tm_sec
+                << " "
+                << proximoEvento.getNombreEvento()
+                << " Evento "
+                << proximoEvento.getNumeroEvento()
+                << endl;
+
+            k++;
+
+            // si se ejecutan 500 eventos pregunta al usuario si quiere agregar 50 eventos
+            if((k%500) == 0){
+                cout << "Quieres generar 50 eventos? , presiona 1 , si no quieres presiona 0";cin >> fin;
+                if(fin == 1){
+                    for(int i=0;i<50;i++){
+                        Reloj relojActual = relojes->GetNth(relojes,i)->data;
+                        int u=relojActual.getTiempo(),v=1+rand()%relojActual.getTiempo();
+                        srand (time(NULL));
+                        for(int j=0;j<1;j++){
+
+                            int random = rand();
+                            if(relojActual.getReloj() == "periodico"){
+                                relojActual.setEvento(relojActual.getTiempo(),relojActual.getNombre());
+                            }else if(relojActual.getReloj() == "aleatorio"){
+                                relojActual.setEvento(random % relojActual.getTiempo(),relojActual.getNombre());
+                            }
+
+                            u+=relojActual.getTiempo();
+                            v+=1+rand()%relojActual.getTiempo();
+
+                            eventos->push(&eventos,relojActual.getEvento());
+
+                        }
+                    }
+
+                    // vuelve a ordenar los eventos
+                    eventos->quickSort(&eventos);
+                }
+            }
+        }
+
+
+    }
+
+};
+
+class PlanificadorConHeap{
+private:
+    vector<Evento> eventos;
+    vector<Reloj> relojes;
+public:
+    PlanificadorConHeap(vector<vector<string>> wordsRelojes){
+        for(int i=0;i< wordsRelojes.size();i++){
+            agregarReloj(wordsRelojes[i]);
+        }
+    };
+
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
+    void agregarReloj(vector<string> words){
+        // Crea un reloj
+        Reloj reloj = Reloj();
+        reloj.setNumero(stoi(words[0]));
+        reloj.setNombre(words[1]);
+        reloj.setReloj(words[2]);
+        reloj.setTiempoRepe(stoi(words[3]));
+
+
+<<<<<<< HEAD
         //Agrega el Reloj a la lista
         relojes->push(&relojes,reloj);
 
@@ -367,6 +526,93 @@ return k;
 
 
     }
+=======
+        //Agrega el Reloj al vector
+        relojes.push_back(reloj);
+    }
+
+    void run(){
+        for(int i=0;i<relojes.size();i++) {
+            int u = relojes[i].getTiempo(),
+                    v = 1 + rand() % relojes[i].getTiempo();
+            for (int j = 0; j < 10; j++) {
+                if (relojes[i].getReloj() == "periodico") {
+                    relojes[i].setEvento(u, relojes[i].getNombre());
+                } else if (relojes[i].getReloj() == "aleatorio") {
+                    relojes[i].setEvento(v, relojes[i].getNombre());
+                }
+
+                u += relojes[i].getTiempo();
+                v += 1 + rand() % relojes[i].getTiempo();
+
+                eventos.push_back(relojes[i].getEvento());
+            }
+
+
+        }
+
+        int n = eventos.size();
+        heapSort(eventos, n);
+
+        int fin = 1,k=0;
+
+        while(fin == 1){
+
+            time_t t = time(0) + eventos[k].getTiempo();
+            tm* now = localtime(&t);
+            cout
+                    << now->tm_mday
+                    << "-"
+                    << now->tm_mon
+                    << "-"
+                    << now->tm_year+1900
+                    << " "
+                    << now->tm_hour
+                    << ":"
+                    <<  now->tm_min
+                    << ":"
+                    << now->tm_sec
+                    << " "
+                    << eventos[k].getNombreEvento()
+                    << " Evento "
+                    << eventos[k].getNumeroEvento()
+                    << endl;
+
+            k++;
+
+            if((k%500) == 0){
+                cout << "Quieres 50 eventos mas?? presiona 1";cin >> fin;
+                if(fin != 1){
+                    break;
+                }else{
+                    for(int i=0;i<10;i++) {
+                        int u = relojes[i].getTiempo(),
+                                v = 1 + rand() % relojes[i].getTiempo();
+                        for (int j = 0; j < 5; j++) {
+                            if (relojes[i].getReloj() == "periodico") {
+                                relojes[i].setEvento(u, relojes[i].getNombre());
+                            } else if (relojes[i].getReloj() == "aleatorio") {
+                                relojes[i].setEvento(v, relojes[i].getNombre());
+                            }
+
+                            u += relojes[i].getTiempo();
+                            v += 1 + rand() % relojes[i].getTiempo();
+
+                            cout << relojes[i].getEvento().getTiempo() << endl;
+
+                            eventos.push_back(relojes[i].getEvento());
+                        }
+                    }
+                    int n = eventos.size();
+                    heapSort(eventos, n);
+                }
+            }
+        }
+
+
+
+        }
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 
 };
 
@@ -757,6 +1003,7 @@ int main() {
                 contador = 0;
                 words.clear();
             }
+<<<<<<< HEAD
     }
 
     char opcion;
@@ -783,6 +1030,27 @@ int main() {
 			
 	}
 
+=======
+    }
+
+    char opcion;
+    cout << "Elije tu algoritmo de ordenamiento: " << endl;
+    cout << "Presiona 1 para Quicksort: " << endl;
+    cout << "Presiona 2 para Heapsort: " << endl;
+    cout << "Presiona cualquier otra tecla para salir: ";cin >> opcion;
+
+    if(opcion == '1'){
+        // Lista con quicksort
+        PlanificadorConLista planificadorLista = PlanificadorConLista(wordsRelojes);
+        planificadorLista.run();
+    }else if(opcion == '2'){
+
+        PlanificadorConHeap planificadorConHeap = PlanificadorConHeap(wordsRelojes);
+        planificadorConHeap.run();
+
+    }
+
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 
 
     fe.close();

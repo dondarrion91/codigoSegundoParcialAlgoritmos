@@ -8,6 +8,7 @@
 using namespace std;
 #ifndef PARCIAL2_HEAP_H
 #define PARCIAL2_HEAP_H
+<<<<<<< HEAD
 int cch=0;
 template<typename T>
 void heapify(vector<T> &arr, int n, int i)  //viene 1º ([1][4][8][5][3][2], 6, 2)   //([1][4][8][5][3][2], 6, 1)    //([1][5][8][4][3][2], 6, 3)    ////([1][5][8][4][3][2], 6, 0)
@@ -53,6 +54,50 @@ void heapSort(vector<T> &arr, int n) // vine ([1][4][8][5][3][2], 6)
 
         // call max heapify on the reduced heap
         heapify(arr, i, 0);     //mando ([1][5][4][3][2][8], 5, 0) y devuelve lo mismo  //([2][5][4][3][1][8], 4, 0)
+=======
+
+template<typename T>
+void heapify(vector<T> &arr, int n, int i)
+{
+    int largest = i; // Initialize largest as root
+    int l = 2*i + 1; // left = 2*i + 1
+    int r = 2*i + 2; // right = 2*i + 2
+
+    // If left child is larger than root
+    if (l < n && arr[l].getTiempo() > arr[largest].getTiempo())
+        largest = l;
+
+    // If right child is larger than largest so far
+    if (r < n && arr[r].getTiempo() > arr[largest].getTiempo())
+        largest = r;
+
+    // If largest is not root
+    if (largest != i)
+    {
+        swap(arr[i], arr[largest]);
+
+        // Recursively heapify the affected sub-tree
+        heapify(arr, n, largest);
+    }
+}
+
+// main function to do heap sort
+template<typename T>
+void heapSort(vector<T> &arr, int n)
+{
+    // Build heap (rearrange array)
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // One by one extract an element from heap
+    for (int i=n-1; i>0; i--)
+    {
+        // Move current root to end
+        swap(arr[0], arr[i]);
+
+        // call max heapify on the reduced heap
+        heapify(arr, i, 0);
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
     }
 }
 
@@ -64,8 +109,11 @@ void printArray(vector<T> &arr, int n)
         cout << arr[i].getTiempo() << " ";
     cout << "\n";
 }
+<<<<<<< HEAD
 void getComp(){
         cout<< "Comp: "<< cch;
     }
+=======
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 
 #endif //PARCIAL2_HEAP_H

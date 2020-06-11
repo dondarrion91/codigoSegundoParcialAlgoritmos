@@ -6,18 +6,9 @@
 
 #IncludeRegexTransform: 
 
+<<<<<<< HEAD
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/BinomialHeap.h
-iostream
--
-fstream
--
-iomanip
--
-ostream
--
-string
--
-
+=======
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
 iostream
 -
@@ -45,6 +36,49 @@ ctime
 -
 
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
+iostream
+-
+fstream
+-
+<<<<<<< HEAD
+iomanip
+-
+ostream
+-
+string
+-
+
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
+iostream
+-
+vector
+-
+
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
+iostream
+-
+fstream
+-
+=======
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
+stdlib.h
+-
+sstream
+-
+cstdlib
+-
+string
+-
+vector
+-
+chrono
+-
+ctime
+-
+<<<<<<< HEAD
+
+/home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/main.cpp
 iostream
 -
 fstream
@@ -63,10 +97,15 @@ chrono
 -
 ctime
 -
+=======
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 Lista.h
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Lista.h
 Heap.h
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/Heap.h
+<<<<<<< HEAD
 BinomialHeap.h
 /home/julian/CLionProjects/codigoSegundoParcialAlgoritmos/BinomialHeap.h
+=======
+>>>>>>> 8f9dc2faf66360ee71369ab10bbc473a969e9c5d
 
